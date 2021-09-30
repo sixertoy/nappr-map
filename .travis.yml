@@ -1,0 +1,14 @@
+os: linux
+dist: xenial
+language: node_js
+branches:
+  only:
+    - master
+cache:
+  yarn: true
+script:
+  - npm run test --verbose
+after_success:
+  - cat ./coverage/lcov.info | coveralls && rm -rf ./coverage
+before_deploy:
+  - yarn build

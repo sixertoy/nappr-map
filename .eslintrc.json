@@ -1,0 +1,35 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": [
+    "prettier",
+    "simple-import-sort",
+    "import",
+    "sort-destructure-keys",
+    "sort-keys-fix"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["^react$", "^react-dom$", "^prop-types$"]
+      }
+    ],
+    "prettier/prettier": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort-destructure-keys/sort-destructure-keys": "error",
+    "sort-imports": "off",
+    "sort-keys": ["error", "asc"],
+    "sort-keys-fix/sort-keys-fix": ["error", "asc"],
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".js", ".jsx"] }
+    ],
+    "react/jsx-props-no-spreading": "warn"
+  }
+}
