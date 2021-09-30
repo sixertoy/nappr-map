@@ -1,13 +1,16 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import url from '@rollup/plugin-url';
+import autoprefixer from 'autoprefixer';
 import builtins from 'builtin-modules';
+import postcss from 'postcss';
 import babel from 'rollup-plugin-babel';
 import excludeDependenciesFromBundle from 'rollup-plugin-exclude-dependencies-from-bundle';
+import sass from 'rollup-plugin-sass';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { terser } from 'rollup-plugin-terser';
 
-import { main, module } from './package.json';
+import { main, module, name } from './package.json';
 
 require('dotenv').config();
 
@@ -30,6 +33,13 @@ const plugins = [
     runtimeHelpers: true,
   }),
   commonjs(),
+  sass({
+    output: 'lib/styles.css',
+    processor: css =>
+      postcss([autoprefixer])
+        .process(css)
+        .then(result => result.css),
+  }),
   sizeSnapshot(),
   IS_DEVELOPMENT ? null : terser(),
 ].filter(v => v);
@@ -42,14 +52,14 @@ export default {
       file: main,
       format: 'cjs',
       globals,
-      name: '@nappr/map',
+      name,
       sourcemap: true,
     },
     {
       file: module,
       format: 'esm',
       globals,
-      name: '@nappr/map',
+      name,
       sourcemap: true,
     },
   ],
