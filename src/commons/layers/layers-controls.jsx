@@ -62,13 +62,19 @@ const MapLayersControlsComponent = React.memo(
                       }}
                       type="button"
                       onClick={() => layerHandler(layerid)}>
-                      <img
-                        alt=""
-                        className="is-block"
-                        height={32}
-                        src={`${tilesurl}/${layerid}-thumb.png`}
-                        width={32}
-                      />
+                      <picture>
+                        <source
+                          srcSet={`${tilesurl}/${layerid}-thumb.jpg`}
+                          type="image/jpg"
+                        />
+                        <img
+                          alt=""
+                          className="is-block"
+                          height={32}
+                          src={`${tilesurl}/${layerid}-thumb.png`}
+                          width={32}
+                        />
+                      </picture>
                     </button>
                   ))}
             </div>
