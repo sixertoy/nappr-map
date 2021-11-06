@@ -32,7 +32,7 @@ import React, { useCallback, useMemo } from 'react';
 import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import { Debugger, LayersManager } from './commons';
-import { LayersProvider } from './contexts/layers';
+import { LayersProvider } from './contexts';
 import { LatLngType, MaxBoundsType, ZoomType } from './types';
 
 const GameMapComponent = React.memo(
@@ -41,31 +41,20 @@ const GameMapComponent = React.memo(
     center,
     children,
     className,
+    debug,
     defaultLayer,
-    editable,
     extension,
     layers,
-    // onChange,
+    onClick,
     onCreated,
     onDebugChange,
     tilesurl,
     zoom,
   }) => {
-    // const [draft, setDraft] = useState(null);
-
     const mapCreatedHandler = useCallback(
       map => onCreated({ map, type: 'created' }),
       [onCreated]
     );
-
-    // const layerClickHandler = useCallback(
-    //   ({ latlng, originalEvent }) => {
-    //     if (!editable || !originalEvent.isTrusted) return;
-    //     setDraft(latlng);
-    //     onChange({ latlng, layerid: activeLayer, type: 'draft' });
-    //   },
-    //   [activeLayer, editable, onChange]
-    // );
 
     const MapComponent = useMemo(() => {
       const boundsne = get(bounds, 'northEast');
@@ -80,23 +69,20 @@ const GameMapComponent = React.memo(
           className={`${className} nappr-gamemap`}
           crs={Leaflet.CRS.Simple}
           doubleClickZoom={false}
-          maxBounds={
-            (hasmaxbounds && [bounds.southWest, bounds.northEast]) || null
-          }
+          maxBounds={(hasmaxbounds && [boundssw, boundsne]) || null}
           maxZoom={Number(zoom.max)}
           minZoom={Number(zoom.min)}
           wheelPxPerZoomLevel={256}
           whenCreated={mapCreatedHandler}
-          // worldCopyJump={editable}
           zoom={Number(zoom.current)}
           zoomControl={false}>
-          {(!hasmaxbounds || editable) && <Debugger onDebug={onDebugChange} />}
+          {debug && <Debugger onDebug={onDebugChange} />}
           <LayersProvider
             active={defaultLayer}
             extension={extension}
             layers={layers}
             tilesurl={tilesurl}>
-            <LayersManager />
+            <LayersManager onClick={onClick} />
             {children && <LayerGroup>{children}</LayerGroup>}
           </LayersProvider>
           <ZoomControl position="topright" />
@@ -110,10 +96,11 @@ const GameMapComponent = React.memo(
     }, [
       defaultLayer,
       layers,
-      editable,
+      debug,
       bounds,
       children,
       className,
+      onClick,
       zoom,
       tilesurl,
       extension,
@@ -131,11 +118,11 @@ GameMapComponent.defaultProps = {
   center: { lat: 0, lng: 0 },
   children: null,
   className: '',
+  debug: false,
   defaultLayer: 0,
-  editable: false,
   extension: 'png',
   layers: [],
-  // onChange: v => v,
+  onClick: v => v,
   onCreated: v => v,
   onDebugChange: null,
 };
@@ -145,14 +132,14 @@ GameMapComponent.propTypes = {
   center: LatLngType,
   children: PropTypes.node,
   className: PropTypes.string,
+  debug: PropTypes.bool,
   defaultLayer: PropTypes.number,
-  editable: PropTypes.bool,
   extension: PropTypes.string,
   layers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
   ]),
-  // onChange: PropTypes.func,
+  onClick: PropTypes.func,
   onCreated: PropTypes.func,
   onDebugChange: PropTypes.func,
   tilesurl: PropTypes.string.isRequired,

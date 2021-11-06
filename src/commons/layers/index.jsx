@@ -1,16 +1,18 @@
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 
-import { LayersConsumer } from '../../contexts/layers';
+import { LayersConsumer } from '../../contexts';
 import MapLayersControls from './layers-controls';
 import MapLayersGroup from './layers-group';
 
-const MapLayersManagerComponent = React.memo(() => {
-  const layerClickHandler = useCallback(() => {
-    // { latlng, originalEvent }
-    // if (!editable || !originalEvent.isTrusted) return;
-    // setDraft(latlng);
-    // onChange({ latlng, layerid: activeLayer, type: 'draft' });
-  }, []);
+const MapLayersManagerComponent = React.memo(({ onClick }) => {
+  const layerClickHandler = useCallback(
+    ({ latlng, originalEvent }, layerid) => {
+      if (!originalEvent.isTrusted) return;
+      onClick({ latlng, layerid, type: 'draft' });
+    },
+    [onClick]
+  );
 
   return (
     <LayersConsumer>
@@ -23,7 +25,7 @@ const MapLayersManagerComponent = React.memo(() => {
               extension={extension}
               layers={layers}
               tilesurl={tilesurl}
-              onClick={layerClickHandler}
+              onClick={evt => layerClickHandler(evt, active)}
             />
             {hasmanylayers && (
               <MapLayersControls
@@ -41,6 +43,10 @@ const MapLayersManagerComponent = React.memo(() => {
     </LayersConsumer>
   );
 });
+
+MapLayersManagerComponent.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
 
 MapLayersManagerComponent.displayName = 'MapLayersManagerComponent';
 
