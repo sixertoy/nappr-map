@@ -1,0 +1,95 @@
+@import '~leaflet/dist/leaflet.css';
+
+.nappr-map__container {
+  $white: #fff;
+  $danger: #c94130;
+  $danger-hover: #bf2917;
+  $success: #00b35b;
+  $success-hover: #00b35b;
+
+  background-color: #000;
+  flex: 1;
+
+  &-button-danger {
+    background: $danger;
+    color: $white;
+
+    &:hover {
+      background: $danger-hover;
+    }
+  }
+
+  &-button-success {
+    background: $success;
+    color: $white;
+
+    &:hover {
+      background: $success-hover;
+    }
+  }
+
+  &.leaflet-container {
+    .leaflet-div-icon {
+      background: none !important;
+      border: 0 !important;
+    }
+
+    .leaflet-marker-divicon-container {
+      position: absolute;
+    }
+
+    .leaflet-marker-divicon-inner {
+      position: relative;
+    }
+
+    .map-marker-icon {
+      background: #fff !important;
+      border-radius: 14px;
+      height: 28px !important;
+      width: 28px !important;
+    }
+
+    .leaflet-popup-close-button {
+      right: 3px !important;
+      top: 3px !important;
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 4px !important;
+    }
+
+    .leaflet-control-zoom {
+      border: 0 !important;
+      border-radius: 16px !important;
+      box-shadow: 0 0 10px 0 rgb(0 0 0 / 45%) !important;
+      margin-bottom: 12px !important;
+      margin-right: 12px !important;
+      overflow: hidden;
+
+      a {
+        font-size: 1.4em;
+        height: 32px !important;
+        width: 32px !important;
+      }
+    }
+  }
+}
+
+.nappr-map__tooltip {
+  background: #202630;
+  border-color: #202630;
+  color: #fff;
+
+  &.leaflet-tooltip-top::before: {
+    border-top-color: #202630;
+  }
+}
+
+@media (max-width: 768px) {
+  .nappr-map__container {
+    .leaflet-control-zoom {
+      display: none;
+      visibility: hidden;
+    }
+  }
+}

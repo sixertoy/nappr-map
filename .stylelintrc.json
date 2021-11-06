@@ -1,0 +1,33 @@
+{
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier"],
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["inside-block", "blockless-after-same-name-blockless"]
+      }
+    ],
+    "order/order": [
+      {
+        "hasBlock": false,
+        "name": "extend",
+        "type": "at-rule"
+      },
+      "custom-properties",
+      "dollar-variables",
+      "at-variables",
+      "declarations",
+      "rules",
+      "less-mixins",
+      {
+        "hasBlock": true,
+        "name": "media",
+        "type": "at-rule"
+      }
+    ],
+    "order/properties-alphabetical-order": true,
+    "scss/at-extend-no-missing-placeholder": null,
+    "selector-class-pattern": "^[a-z_-]+$"
+  }
+}
