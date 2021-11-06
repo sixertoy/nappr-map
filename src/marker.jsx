@@ -35,7 +35,7 @@ const GameMapMarkerComponent = React.memo(
                   textAlign: 'center',
                   width: 28,
                 }}>
-                <Icon color={color} size={size} />
+                {Icon && <Icon color={color} size={size} />}
               </div>
             </div>
           </div>
