@@ -1,6 +1,6 @@
 {
   "name": "@nappr/map",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Leaflet Interactive React Map",
   "main": "lib/nappr-map.js",
   "repository": {
