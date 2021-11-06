@@ -30,6 +30,7 @@
       "error",
       { "extensions": [".js", ".jsx"] }
     ],
+    "react/jsx-fragments": [2, "element"],
     "react/jsx-props-no-spreading": "warn"
   }
 }

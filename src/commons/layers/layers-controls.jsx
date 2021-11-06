@@ -14,7 +14,7 @@ const POSITION_CLASSES = {
 };
 
 const MapLayersControlsComponent = React.memo(
-  ({ active, layers, onChange, position, tilesurl }) => {
+  ({ active, extension, layers, onChange, position, tilesurl }) => {
     const mounted = useRef(false);
     const [visibility, setVisibility] = useState(false);
 
@@ -64,8 +64,8 @@ const MapLayersControlsComponent = React.memo(
                       onClick={() => layerHandler(layerid)}>
                       <picture>
                         <source
-                          srcSet={`${tilesurl}/${layerid}-thumb.jpg`}
-                          type="image/jpg"
+                          srcSet={`${tilesurl}/${layerid}-thumb.${extension}`}
+                          type={`image/${extension}`}
                         />
                         <img
                           alt=""
@@ -87,6 +87,7 @@ const MapLayersControlsComponent = React.memo(
 
 MapLayersControlsComponent.propTypes = {
   active: PropTypes.number.isRequired,
+  extension: PropTypes.string.isRequired,
   layers: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
   position: PropTypes.oneOf([

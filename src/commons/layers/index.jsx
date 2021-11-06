@@ -14,12 +14,13 @@ const MapLayersManagerComponent = React.memo(() => {
 
   return (
     <LayersConsumer>
-      {({ active, layers, onLayerChange, tilesurl }) => {
+      {({ active, extension, layers, onLayerChange, tilesurl }) => {
         const hasmanylayers = layers.length > 1;
         return (
-          <>
+          <React.Fragment>
             <MapLayersGroup
               active={active}
+              extension={extension}
               layers={layers}
               tilesurl={tilesurl}
               onClick={layerClickHandler}
@@ -27,13 +28,14 @@ const MapLayersManagerComponent = React.memo(() => {
             {hasmanylayers && (
               <MapLayersControls
                 active={active}
+                extension={extension}
                 layers={layers}
                 position="bottomright"
                 tilesurl={tilesurl}
                 onChange={layerid => onLayerChange(layerid)}
               />
             )}
-          </>
+          </React.Fragment>
         );
       }}
     </LayersConsumer>
