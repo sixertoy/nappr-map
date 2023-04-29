@@ -1,36 +1,35 @@
 {
-  "extends": ["airbnb", "prettier"],
-  "plugins": [
-    "prettier",
-    "simple-import-sort",
-    "import",
-    "sort-destructure-keys",
-    "sort-keys-fix"
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
   ],
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
+  "parserOptions": {
+    "project": "./tsconfig.json"
   },
+  "plugins": ["eslint-plugin-simple-import-sort", "sort-keys-fix"],
   "rules": {
-    "import/no-unresolved": [
-      "error",
+    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-unsafe-return": 1,
+    "import/prefer-default-export": 0,
+    "react/button-has-type": 0,
+    "react/display-name": 2,
+    "react/jsx-fragments": [2, "element"],
+    "react/jsx-sort-props": [
+      2,
       {
-        "ignore": ["^react$", "^react-dom$", "^prop-types$"]
+        "callbacksLast": true,
+        "reservedFirst": true,
+        "shorthandFirst": true
       }
     ],
-    "prettier/prettier": "error",
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "sort-destructure-keys/sort-destructure-keys": "error",
-    "sort-imports": "off",
-    "sort-keys": ["error", "asc"],
-    "sort-keys-fix/sort-keys-fix": ["error", "asc"],
-    "react/jsx-filename-extension": [
-      "error",
-      { "extensions": [".js", ".jsx"] }
-    ],
-    "react/jsx-fragments": [2, "element"],
-    "react/jsx-props-no-spreading": "warn"
+    "react/react-in-jsx-scope": 0,
+    "simple-import-sort/exports": 2,
+    "simple-import-sort/imports": 1,
+    "sort-keys-fix/sort-keys-fix": 2
   }
 }

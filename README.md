@@ -5,5 +5,5 @@ Leaflet Interactive React Map
 ## Install
 
 ```bash
-yarn add firebase @nappr/firebase
+yarn add @nappr/map
 ```
