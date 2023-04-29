@@ -27,34 +27,44 @@ import './styles.scss';
 
 import Leaflet from 'leaflet';
 import get from 'lodash.get';
-import PropTypes from 'prop-types';
-import React, { useCallback, useMemo } from 'react';
-import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
+import React, { useMemo } from 'react';
+import { MapContainer, ZoomControl } from 'react-leaflet';
 
-import { Debugger, LayersManager } from './commons';
+import { debug } from 'console';
+import layers from './commons/layers';
 import { LayersProvider } from './contexts';
-import { LatLngType, MaxBoundsType, ZoomType } from './types';
+import { Bounds, Center, Zoom } from './interfaces';
+
+interface GameMapComponentProps {
+  bounds: Bounds;
+  center: Center;
+  defaultLayer?: number | undefined;
+  className?: string | undefined;
+  zoom: Zoom;
+  tilesurl: string;
+  onCreated: ({ map, type }: { map: unknown; type: string }) => void;
+}
 
 const GameMapComponent = React.memo(
   ({
     bounds,
     center,
-    children,
+    // children,
     className,
-    debug,
+    // debug,
     defaultLayer,
-    extension,
-    layers,
-    onClick,
+    // extension,
+    // layers,
+    // onClick,
     onCreated,
-    onDebugChange,
+    // onDebugChange,
     tilesurl,
     zoom,
-  }) => {
-    const mapCreatedHandler = useCallback(
-      map => onCreated({ map, type: 'created' }),
-      [onCreated]
-    );
+  }: GameMapComponentProps) => {
+    // const mapCreatedHandler = useCallback(
+    //   map => onCreated({ map, type: 'created' }),
+    //   [onCreated]
+    // );
 
     const MapComponent = useMemo(() => {
       const boundsne = get(bounds, 'northEast');
@@ -66,24 +76,24 @@ const GameMapComponent = React.memo(
           attributionControl={false}
           bounceAtZoomLimits={false}
           center={center}
-          className={`${className} nappr-gamemap`}
+          className={`${className || ''} nappr-gamemap`}
           crs={Leaflet.CRS.Simple}
           doubleClickZoom={false}
-          maxBounds={(hasmaxbounds && [boundssw, boundsne]) || null}
+          // maxBounds={(hasmaxbounds && [boundssw, boundsne]) || null}
           maxZoom={Number(zoom.max)}
           minZoom={Number(zoom.min)}
           wheelPxPerZoomLevel={256}
-          whenCreated={mapCreatedHandler}
+          // whenCreated={mapCreatedHandler}
           zoom={Number(zoom.current)}
           zoomControl={false}>
-          {debug && <Debugger onDebug={onDebugChange} />}
+          {/* {debug && <Debugger onDebug={onDebugChange} />} */}
           <LayersProvider
-            active={defaultLayer}
-            extension={extension}
+            active={defaultLayer || 0}
+            // extension={extension}
             layers={layers}
             tilesurl={tilesurl}>
-            <LayersManager onClick={onClick} />
-            {children && <LayerGroup>{children}</LayerGroup>}
+            {/* <LayersManager onClick={onClick} /> */}
+            {/* {children && <LayerGroup>{children}</LayerGroup>} */}
           </LayersProvider>
           <ZoomControl position="topright" />
           {/* draft && (
@@ -98,53 +108,50 @@ const GameMapComponent = React.memo(
       layers,
       debug,
       bounds,
-      children,
+      // children,
       className,
-      onClick,
+      // onClick,
       zoom,
       tilesurl,
-      extension,
+      // extension,
       center,
-      onDebugChange,
-      mapCreatedHandler,
+      // onDebugChange,
+      // mapCreatedHandler,
     ]);
 
     return MapComponent;
   }
 );
 
-GameMapComponent.defaultProps = {
-  bounds: null,
-  center: { lat: 0, lng: 0 },
-  children: null,
-  className: '',
-  debug: false,
-  defaultLayer: 0,
-  extension: 'png',
-  layers: [],
-  onClick: v => v,
-  onCreated: v => v,
-  onDebugChange: null,
-};
+// GameMapComponent.defaultProps = {
+//   bounds: null,
+//   center: { lat: 0, lng: 0 },
+//   children: null,
+//   className: '',
+//   debug: false,
+//   defaultLayer: 0,
+//   extension: 'png',
+//   layers: [],
+//   onClick: v => v,
+//   onCreated: v => v,
+//   onDebugChange: null,
+// };
 
-GameMapComponent.propTypes = {
-  bounds: MaxBoundsType,
-  center: LatLngType,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  debug: PropTypes.bool,
-  defaultLayer: PropTypes.number,
-  extension: PropTypes.string,
-  layers: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.string,
-  ]),
-  onClick: PropTypes.func,
-  onCreated: PropTypes.func,
-  onDebugChange: PropTypes.func,
-  tilesurl: PropTypes.string.isRequired,
-  zoom: ZoomType.isRequired,
-};
+// GameMapComponent.propTypes = {
+//   children: PropTypes.node,
+//   className: PropTypes.string,
+//   debug: PropTypes.bool,
+//   defaultLayer: PropTypes.number,
+//   extension: PropTypes.string,
+//   layers: PropTypes.oneOfType([
+//     PropTypes.arrayOf(PropTypes.string),
+//     PropTypes.string,
+//   ]),
+//   onClick: PropTypes.func,
+//   onCreated: PropTypes.func,
+//   onDebugChange: PropTypes.func,
+//   tilesurl: PropTypes.string.isRequired,
+// };
 
 GameMapComponent.displayName = 'GameMapComponent';
 
