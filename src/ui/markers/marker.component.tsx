@@ -1,11 +1,10 @@
-import Leaflet from 'leaflet';
-import PropTypes from 'prop-types';
+import Leaflet, { LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { createUseStyles } from 'react-jss';
 import { Marker, Tooltip } from 'react-leaflet';
 
-import { LatLngType } from './types';
+import { IconComponent } from '../icon';
 
 const useStyles = createUseStyles({
   tooltip: {
@@ -16,8 +15,28 @@ const useStyles = createUseStyles({
   },
 });
 
-const GameMapMarkerComponent = React.memo(
-  ({ background, color, icon: Icon, label, latlng, onClick, size, uid }) => {
+interface MapMarkerComponentProps {
+  background: string;
+  color: string;
+  icon: string;
+  label: string;
+  latlng: LatLngLiteral;
+  onClick?: ({ type, uid }: { type: string; uid: string }) => void | undefined;
+  size?: string | undefined;
+  uid: string;
+}
+
+export const MapMarkerComponent: React.FC<MapMarkerComponentProps> = React.memo(
+  ({
+    background,
+    color,
+    icon,
+    label,
+    latlng,
+    onClick,
+    size,
+    uid,
+  }: MapMarkerComponentProps) => {
     const classes = useStyles();
 
     const DOMString = useMemo(
@@ -35,15 +54,18 @@ const GameMapMarkerComponent = React.memo(
                   textAlign: 'center',
                   width: 28,
                 }}>
-                {Icon && <Icon color={color} size={size} />}
+                {icon && (
+                  <IconComponent icon={icon} iconProps={{ color, size }} />
+                )}
               </div>
             </div>
           </div>
         ),
-      [background, size, color, uid]
+      [uid, background, icon, color, size]
     );
 
     const clickHandler = useCallback(() => {
+      if (!onClick) return;
       onClick({ type: 'marker', uid });
     }, [uid, onClick]);
 
@@ -73,22 +95,9 @@ const GameMapMarkerComponent = React.memo(
   }
 );
 
-GameMapMarkerComponent.defaultProps = {
-  onClick: v => v,
-  size: 14,
+MapMarkerComponent.defaultProps = {
+  onClick: undefined,
+  size: undefined,
 };
 
-GameMapMarkerComponent.propTypes = {
-  background: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  icon: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-  latlng: LatLngType.isRequired,
-  onClick: PropTypes.func,
-  size: PropTypes.number,
-  uid: PropTypes.string.isRequired,
-};
-
-GameMapMarkerComponent.displayName = 'GameMapMarkerComponent';
-
-export default GameMapMarkerComponent;
+MapMarkerComponent.displayName = 'MapMarkerComponent';

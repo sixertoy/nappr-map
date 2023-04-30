@@ -20,6 +20,5 @@
     "noEmit": false,
     "emitDeclarationOnly": false
   },
-  "rootDir": ".",
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

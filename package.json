@@ -24,14 +24,14 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/leaflet": "^1.9.3",
     "@types/loadable__component": "^5.13.4",
+    "@types/lodash.get": "^4.4.7",
     "@types/lodash.pick": "^4.4.7",
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.31",
-    "@types/react-dom": "^18.0.11",
-    "@types/jest": "^27.5.2",
-    "@types/leaflet": "^1.9.3",
-    "@types/lodash.get": "^4.4.7",
+    "@types/react-dom": "^18.2.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.28.0",
@@ -60,10 +60,14 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.3",
+    "@types/react-jss": "^10.0.0",
     "leaflet": "^1.9.3",
     "lodash.get": "^4.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "react-jss": "^10.10.0",
     "react-leaflet": "^4.2.1"
   },
   "scripts": {

@@ -1,40 +1,61 @@
-import { PropTypes } from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import { LAYERS_DEFAULT_STATE, LayersContext } from './layers-context';
+import { TilesURLException } from '../exceptions';
+import { LayersException } from '../exceptions/layers.exception';
+import { LayersContext } from './layers-context';
 
-const LayersProvider = ({ active, children, extension, layers, tilesurl }) => {
-  const [state, setState] = useState({
-    ...LAYERS_DEFAULT_STATE,
-    active,
-    extension,
-    layers: Array.isArray(layers) ? layers : [layers],
-    tilesurl,
-  });
+interface MapLayersProviderProps {
+  activeLayer?: number;
+  children?: React.ReactElement;
+  tilesExtension?: string;
+  layers: string[] | string;
+  tilesURL: string;
+}
+
+export function MapLayersProvider({
+  activeLayer,
+  children,
+  tilesExtension,
+  layers,
+  tilesURL,
+}: MapLayersProviderProps) {
+  const [active, setActive] = useState(activeLayer || 0);
 
   const onLayerChange = useCallback(
-    index => setState({ ...state, active: index }),
-    [state]
+    (layerid: number) => setActive(layerid),
+    []
   );
 
+  const providerValue = useMemo(
+    () => ({
+      activeLayer: active,
+      layers: !Array.isArray(layers) ? [layers] : layers,
+      onLayerChange,
+      tilesExtension: tilesExtension || 'png',
+      tilesURL,
+    }),
+    [active, tilesExtension, layers, onLayerChange, tilesURL]
+  );
+
+  if (!tilesURL || !tilesURL.trim()) {
+    throw new TilesURLException();
+  }
+
+  if (!layers || !layers.length) {
+    throw new LayersException();
+  }
+
   return (
-    <LayersContext.Provider value={{ ...state, onLayerChange }}>
+    <LayersContext.Provider value={providerValue}>
       {children}
     </LayersContext.Provider>
   );
+}
+
+MapLayersProvider.defaultProps = {
+  activeLayer: undefined,
+  children: undefined,
+  tilesExtension: undefined,
 };
 
-LayersProvider.propTypes = {
-  active: PropTypes.number.isRequired,
-  children: PropTypes.node.isRequired,
-  extension: PropTypes.string.isRequired,
-  layers: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.string,
-  ]).isRequired,
-  tilesurl: PropTypes.string.isRequired,
-};
-
-LayersProvider.displayName = 'LayersProvider';
-
-export default LayersProvider;
+MapLayersProvider.displayName = 'MapLayersProvider';

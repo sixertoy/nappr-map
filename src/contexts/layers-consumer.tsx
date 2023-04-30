@@ -1,16 +1,14 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-
+import { MapContext } from '../interfaces';
 import { LayersContext } from './layers-context';
 
-const LayersConsumer = ({ children }) => (
-  <LayersContext.Consumer>{state => children(state)}</LayersContext.Consumer>
-);
+interface LayersConsumerProps {
+  children: (state: Partial<MapContext>) => React.ReactNode;
+}
 
-LayersConsumer.propTypes = {
-  children: PropTypes.func.isRequired,
-};
+export function LayersConsumer({ children }: LayersConsumerProps) {
+  return (
+    <LayersContext.Consumer>{state => children(state)}</LayersContext.Consumer>
+  );
+}
 
 LayersConsumer.displayName = 'LayersConsumer';
-
-export default LayersConsumer;

@@ -1,12 +1,13 @@
 import React from 'react';
 
-export const LAYERS_DEFAULT_STATE = {
-  active: 0,
-  extension: 'png',
-  layers: [],
-  tilesurl: null,
-};
+import { MapContext } from '../interfaces';
 
-export const LayersContext = React.createContext(LAYERS_DEFAULT_STATE);
+export const LayersContext = React.createContext<MapContext>({
+  activeLayer: 0,
+  layers: [],
+  onLayerChange: () => {},
+  tilesExtension: 'png',
+  tilesURL: undefined,
+});
 
 LayersContext.displayName = 'LayersContext';
