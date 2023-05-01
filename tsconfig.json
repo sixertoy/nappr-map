@@ -13,10 +13,11 @@
     "module": "es2020",
     "lib": ["dom", "es6"],
     "moduleResolution": "node",
+    "outDir": "./lib",
     "noEmit": false,
     "declaration": true,
-    "emitDeclarationOnly": false,
-    "outDir": "./lib"
+    "emitDeclarationOnly": false
   },
+  "exclude": ["node_modules", "build", "lib"],
   "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }
