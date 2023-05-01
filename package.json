@@ -84,9 +84,7 @@
     "lint": "eslint src/**/*.{ts,tsx} --config=.eslintrc.json",
     "test": "jest --coverage",
     "prebuild": "rm -rf lib && yarn lint",
-    "build:js": "swc src -d ./lib --config-file ./.swcrc",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build": "npm run build:types && npm run build:js",
+    "build": "tsc -p ./tsconfig.json",
     "prepare": "npm run build"
   }
 }
