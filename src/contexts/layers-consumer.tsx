@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { MapContext } from '../interfaces';
 import { LayersContext } from './layers-context';
 

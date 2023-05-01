@@ -1,4 +1,4 @@
-import './map.component.scss';
+// import './map.module.scss';
 
 import Leaflet, { Map } from 'leaflet';
 import React, { useCallback, useMemo, useRef } from 'react';
@@ -40,7 +40,6 @@ export const MapComponent: React.FC<MapComponentProps> = React.memo(
     } = props;
 
     const mapReadyHandler = useCallback(() => {
-      // console.log('leafletMap.current', leafletMap.current);
       if (onReady && leafletMap.current) {
         onReady({ map: leafletMap.current, type: 'ready' });
       }

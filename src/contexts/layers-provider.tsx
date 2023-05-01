@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { TilesURLException } from '../exceptions';
 import { LayersException } from '../exceptions/layers.exception';

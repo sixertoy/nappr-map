@@ -75,6 +75,16 @@
   }
 }
 
+.nappr-map__tooltip {
+  background: #202630;
+  border-color: #202630;
+  color: #fff;
+
+  &.leaflet-tooltip-top::before: {
+    border-top-color: #202630;
+  }
+}
+
 @media (max-width: 768px) {
   .nappr-map__container {
     .leaflet-control-zoom {

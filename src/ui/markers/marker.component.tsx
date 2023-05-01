@@ -1,19 +1,9 @@
 import Leaflet, { LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { createUseStyles } from 'react-jss';
 import { Marker, Tooltip } from 'react-leaflet';
 
 import { IconComponent } from '../icon';
-
-const useStyles = createUseStyles({
-  tooltip: {
-    '&.leaflet-tooltip-top::before': { borderTopColor: '#202630' },
-    background: '#202630',
-    borderColor: '#202630',
-    color: '#FFFFFF',
-  },
-});
 
 interface MapMarkerComponentProps {
   background: string;
@@ -37,8 +27,6 @@ export const MapMarkerComponent: React.FC<MapMarkerComponentProps> = React.memo(
     size,
     uid,
   }: MapMarkerComponentProps) => {
-    const classes = useStyles();
-
     const DOMString = useMemo(
       () =>
         ReactDOMServer.renderToString(
@@ -82,7 +70,7 @@ export const MapMarkerComponent: React.FC<MapMarkerComponentProps> = React.memo(
         position={latlng}>
         {label && (
           <Tooltip
-            className={classes.tooltip}
+            className="nappr-map__tooltip"
             direction="top"
             offset={[8, -12]}
             permanent={false}
