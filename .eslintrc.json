@@ -8,10 +8,16 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["eslint-plugin-simple-import-sort", "sort-keys-fix"],
+  "plugins": [
+    "@typescript-eslint",
+    "eslint-plugin-simple-import-sort",
+    "sort-keys-fix"
+  ],
+  "root": true,
   "rules": {
     "@typescript-eslint/no-explicit-any": 1,
     "@typescript-eslint/no-unsafe-return": 1,
