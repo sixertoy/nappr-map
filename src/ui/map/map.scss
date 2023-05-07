@@ -1,5 +1,3 @@
-@import '~leaflet/dist/leaflet.css';
-
 .nappr-map__container {
   $white: #fff;
   $danger: #c94130;
@@ -80,7 +78,7 @@
   border-color: #202630;
   color: #fff;
 
-  &.leaflet-tooltip-top::before: {
+  &.leaflet-tooltip-top::before {
     border-top-color: #202630;
   }
 }

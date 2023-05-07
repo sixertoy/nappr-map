@@ -1,23 +1,31 @@
 {
-  "baseUrl": ".",
   "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* mine */
+    "allowJs": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    "jsx": "react",
-    "target": "es2020",
-    "module": "es2020",
-    "lib": ["dom", "es6"],
-    "moduleResolution": "node",
-    "outDir": "./lib",
     "noEmit": false,
+    "outDir": "./types",
     "declaration": true,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": true
   },
-  "exclude": ["node_modules", "build", "lib"],
+  "exclude": ["build", "dist", "node_modules", "lib", "vite.config.ts"],
   "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

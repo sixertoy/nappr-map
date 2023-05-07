@@ -3,7 +3,7 @@ import React from 'react';
 import { LayerGroup, TileLayer, useMapEvent } from 'react-leaflet';
 
 interface MapLayersGroupComponentProps {
-  activeLayer: number;
+  activeLayer?: number;
   tilesExtension: string;
   layers: string[];
   onClick: (evt: LeafletMouseEvent) => void;
@@ -25,18 +25,29 @@ export const MapLayersGroupComponent: React.FC<MapLayersGroupComponentProps> =
       return (
         <LayerGroup>
           {layers
-            .filter((k, index) => activeLayer === index)
-            .map(layerid => (
-              <TileLayer
-                key={`layer::${layerid}`}
-                errorTileUrl="/tiles/blank.png"
-                tileSize={256}
-                url={`${tilesURL}/${layerid}/{z}/{x}_{y}.${tilesExtension}`}
-              />
-            ))}
+            .filter((k, index) => {
+              if (activeLayer === undefined) return true;
+              return activeLayer === index;
+            })
+            .map(layerid => {
+              const key = `layer::${layerid}`;
+              const url = `${tilesURL}/${layerid}/{z}/{x}_{y}.${tilesExtension}`;
+              return (
+                <TileLayer
+                  key={key}
+                  errorTileUrl="/tiles/blank.png"
+                  tileSize={256}
+                  url={url}
+                />
+              );
+            })}
         </LayerGroup>
       );
     }
   );
+
+MapLayersGroupComponent.defaultProps = {
+  activeLayer: undefined,
+};
 
 MapLayersGroupComponent.displayName = 'MapLayersGroupComponent';

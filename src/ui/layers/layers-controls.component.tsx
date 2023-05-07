@@ -2,10 +2,9 @@ import Leaflet from 'leaflet';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ControlsPosition } from '../../enums';
-import { IconComponent } from '../icon';
 
 interface MapLayersControlsComponentProps {
-  activeLayer: number;
+  activeLayer?: number;
   tilesExtension: string;
   layers: string[];
   onChange: (index: number) => void;
@@ -53,40 +52,39 @@ export const MapLayersControlsComponent: React.FC<MapLayersControlsComponentProp
                   className="is-block p3 mx3"
                   type="button"
                   onClick={() => setVisibility(!visibility)}>
-                  <IconComponent
+                  {/* <IconComponent
                     icon={iconName}
                     iconProps={{ color: '#FFFFFF', size: 24 }}
-                  />
+                  /> */}
                 </button>
-                {visibility &&
-                  layers
-                    .filter((k, index) => activeLayer !== index)
-                    .map(layerid => (
-                      <button
-                        key={layerid}
-                        className="is-block p3 mx3"
-                        style={{
-                          background: '#FFFFFF',
-                          border: 0,
-                          borderRadius: 2,
-                        }}
-                        type="button"
-                        onClick={() => layerHandler(layerid)}>
-                        <picture>
-                          <source
-                            srcSet={`${tilesURL}/${layerid}-thumb.${tilesExtension}`}
-                            type={`image/${tilesExtension}`}
-                          />
-                          <img
-                            alt=""
-                            className="is-block"
-                            height={32}
-                            src={`${tilesURL}/${layerid}-thumb.png`}
-                            width={32}
-                          />
-                        </picture>
-                      </button>
-                    ))}
+                {layers
+                  .filter((k, index) => activeLayer !== index)
+                  .map(layerid => (
+                    <button
+                      key={layerid}
+                      className="is-block p3 mx3"
+                      style={{
+                        background: '#FFFFFF',
+                        border: 0,
+                        borderRadius: 2,
+                      }}
+                      type="button"
+                      onClick={() => layerHandler(layerid)}>
+                      <picture>
+                        <source
+                          srcSet={`${tilesURL}/${layerid}-thumb.${tilesExtension}`}
+                          type={`image/${tilesExtension}`}
+                        />
+                        <img
+                          alt=""
+                          className="is-block"
+                          height={32}
+                          src={`${tilesURL}/${layerid}-thumb.png`}
+                          width={32}
+                        />
+                      </picture>
+                    </button>
+                  ))}
               </div>
             </div>
           </div>
@@ -96,6 +94,7 @@ export const MapLayersControlsComponent: React.FC<MapLayersControlsComponentProp
   );
 
 MapLayersControlsComponent.defaultProps = {
+  activeLayer: undefined,
   position: undefined,
 };
 

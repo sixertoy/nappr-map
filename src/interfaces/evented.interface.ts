@@ -7,12 +7,12 @@ export interface Debuggable {
 }
 
 export interface ReadyEvent {
-  map: Map;
+  map: Map | null;
   type: string;
 }
 
 export interface MapMouseEvent {
   type: 'click' | 'move';
   latlng: LatLng;
-  layerid: number;
+  layerid: number | undefined;
 }

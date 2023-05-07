@@ -204,3 +204,6 @@ lib
 build
 config.build.json
 .size-snapshot.json
+lib
+dist
+types
