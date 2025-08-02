@@ -23,7 +23,9 @@ export const MapLayersComponent: React.FC<MapLayersComponentProps> = React.memo(
 
     const layerClickHandler = useCallback(
       (evt: LeafletMouseEvent, layerid: number | undefined) => {
-        if (!evt.originalEvent.isTrusted) return;
+        if (!evt.originalEvent.isTrusted) {
+          return;
+        }
         const { latlng } = evt;
         onClick({ latlng, layerid, type: 'click' });
       },

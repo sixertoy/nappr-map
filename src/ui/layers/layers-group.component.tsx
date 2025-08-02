@@ -21,7 +21,9 @@ export const MapLayersGroupComponent =
     }: MapLayersGroupComponentProps) => {
       useMapEvent('click', onClick);
 
+
       if (!tilesURL) return null;
+
       return (
         <LayerGroup>
           {layers

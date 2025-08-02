@@ -11,6 +11,8 @@ yarn add @nappr/map
 ## Usage
 
 ```javascript
+import '@nappr/map/dist/styles.css';
+
 import { MapComponent } from '@nappr/map';
 import { AttributionControl } from 'react-leaflet';
 

@@ -1,9 +1,9 @@
 import Leaflet, { Map } from 'leaflet';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { MapContainer, ZoomControl } from 'react-leaflet';
 
 import { MapLayersProvider } from '../../contexts';
-import { Bounds, Center, Debuggable, ReadyEvent, Zoom } from '../../interfaces';
+import { Bounds, Center, Debuggable, MapMouseEvent, ReadyEvent, Zoom } from '../../interfaces';
 import { MapDebuggerComponent } from '../debugger';
 import { MapLayersComponent } from '../layers/layers.component';
 
@@ -18,11 +18,12 @@ interface MapComponentProps {
   tilesExtension?: string;
   tilesURL: string;
   zoom: Zoom;
+  onClick: (evt: MapMouseEvent) => void;
 }
 
 export const MapComponent = React.memo(
   (props: MapComponentProps) => {
-    const leafletMap = useRef<Map | null>(null);
+    const [map, setMap] = useState<Map | null>(null)
 
     const {
       bounds,
@@ -32,6 +33,7 @@ export const MapComponent = React.memo(
       layers,
       onDebug,
       onReady,
+      onClick,
       tilesExtension,
       tilesURL,
       zoom,
@@ -39,19 +41,15 @@ export const MapComponent = React.memo(
 
     const mapReadyHandler = useCallback(() => {
       if (onReady) {
-        onReady({ map: leafletMap.current, type: 'ready' });
+        onReady({ map, type: 'ready' });
       }
-    }, [onReady]);
-
-    const onClick = useCallback(() => {
-      // console.log('toto');
-    }, []);
+    }, [map, onReady]);
 
     const MapElement = useMemo(() => {
       const classname = `nappr-map__container ${className || ''}`.trim();
       return (
         <MapContainer
-          ref={leafletMap}
+          ref={setMap}
           scrollWheelZoom
           attributionControl={false}
           bounceAtZoomLimits={false}
