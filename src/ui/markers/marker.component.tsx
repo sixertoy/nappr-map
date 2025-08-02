@@ -5,9 +5,9 @@ import { Marker, Tooltip } from 'react-leaflet';
 
 
 interface MapMarkerComponentProps {
-  background: string;
-  color: string;
-  icon: string;
+  background?: string;
+  color?: string;
+  // icon: string;
   label: string;
   latlng: LatLngLiteral;
   onClick?: ({ type, uid }: { type: string; uid: string }) => void | undefined;
@@ -17,7 +17,7 @@ interface MapMarkerComponentProps {
 
 export const MapMarkerComponent = React.memo(
   ({
-    background ,
+    background = '#000',
     label,
     latlng,
     onClick,

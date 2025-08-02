@@ -1,13 +1,13 @@
 import Leaflet, { Map } from 'leaflet';
-import React, { useCallback, useMemo, useState } from 'react';
-import { MapContainer, ZoomControl } from 'react-leaflet';
+import React, { PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import { MapLayersProvider } from '../../contexts';
 import { Bounds, Center, Debuggable, MapMouseEvent, ReadyEvent, Zoom } from '../../interfaces';
 import { MapDebuggerComponent } from '../debugger';
 import { MapLayersComponent } from '../layers/layers.component';
 
-interface MapComponentProps {
+interface MapComponentProps extends PropsWithChildren {
   bounds?: Bounds;
   center: Center;
   className?: string;
@@ -30,6 +30,7 @@ export const MapComponent = React.memo(
       center,
       className,
       defaultLayer,
+      children,
       layers,
       onDebug,
       onReady,
@@ -70,8 +71,10 @@ export const MapComponent = React.memo(
             layers={layers}
             tilesExtension={tilesExtension}
             tilesURL={tilesURL}>
-            <MapLayersComponent onClick={onClick} />
-            {/* {children && <LayerGroup>{children}</LayerGroup>} */}
+            <React.Fragment>
+              <MapLayersComponent onClick={onClick} />
+              {children && <LayerGroup>{children}</LayerGroup>}
+            </React.Fragment>
           </MapLayersProvider>
           <ZoomControl position="topright" />
           {/* draft && (
@@ -90,6 +93,7 @@ export const MapComponent = React.memo(
       mapReadyHandler,
       onClick,
       onDebug,
+      children,
       tilesExtension,
       tilesURL,
       zoom,
