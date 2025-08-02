@@ -21,7 +21,7 @@
       "import": "./dist/nappr-map.es.js",
       "require": "./dist/nappr-map.umd.js"
     },
-    "./dist/map.css": "./dist/map.css"
+    "./nappr-map.css": "./dist/nappr-map.css"
   },
   "files": [
     "dist/*",
