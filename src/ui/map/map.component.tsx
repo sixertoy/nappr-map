@@ -14,6 +14,7 @@ interface MapComponentProps extends PropsWithChildren {
   defaultLayer?: number;
   layers: string[] | string;
   onDebug?: ({ bounds, center, zoom }: Debuggable) => void;
+  onLayerChange?: (layer: string) => void;
   onReady?: (evt: ReadyEvent) => void;
   tilesExtension?: string;
   tilesURL: string;
@@ -37,6 +38,7 @@ export const MapComponent = React.memo(
       onClick,
       tilesExtension,
       tilesURL,
+      onLayerChange,
       zoom,
     } = props;
 
@@ -47,6 +49,7 @@ export const MapComponent = React.memo(
     }, [map, onReady]);
 
     const MapElement = useMemo(() => {
+      const mapLayers = Array.isArray(layers) ? layers : [layers];
       const classname = `nappr-map__container ${className || ''}`.trim();
       return (
         <MapContainer
@@ -68,9 +71,10 @@ export const MapComponent = React.memo(
           {onDebug && <MapDebuggerComponent onDebug={onDebug} />}
           <MapLayersProvider
             activeLayer={defaultLayer}
-            layers={layers}
+            layers={mapLayers}
             tilesExtension={tilesExtension}
-            tilesURL={tilesURL}>
+            tilesURL={tilesURL}
+            onChange={onLayerChange}>
             <React.Fragment>
               <MapLayersComponent onClick={onClick} />
               {children && <LayerGroup>{children}</LayerGroup>}

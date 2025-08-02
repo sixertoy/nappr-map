@@ -8,30 +8,37 @@ interface MapLayersProviderProps {
   activeLayer?: number;
   children?: React.ReactElement;
   tilesExtension?: string;
-  layers: string[] | string;
+  layers: string[];
   tilesURL: string;
+  onChange?: (layer: string) => void;
 }
 
 export function MapLayersProvider({
   activeLayer,
   children,
-  tilesExtension,
+  tilesExtension = 'png',
   layers,
   tilesURL,
+  onChange,
 }: MapLayersProviderProps) {
   const [active, setActive] = useState(activeLayer || 0);
 
   const onLayerChange = useCallback(
-    (layerid: number) => setActive(layerid),
-    []
+    (layerid: number) => {
+      setActive(layerid)
+      if (onChange) {
+       onChange(layers[layerid]);
+      }
+    },
+    [layers, onChange]
   );
 
   const providerValue = useMemo(
     () => ({
       activeLayer: active,
-      layers: !Array.isArray(layers) ? [layers] : layers,
+      layers,
       onLayerChange,
-      tilesExtension: tilesExtension || 'png',
+      tilesExtension,
       tilesURL,
     }),
     [active, tilesExtension, layers, onLayerChange, tilesURL]
