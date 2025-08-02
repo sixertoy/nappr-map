@@ -1,4 +1,5 @@
 import './map.scss';
+import 'leaflet/dist/leaflet.css';
 
 import Leaflet, { Map } from 'leaflet';
 import React, { useCallback, useMemo, useRef } from 'react';
