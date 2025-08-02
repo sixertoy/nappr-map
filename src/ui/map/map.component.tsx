@@ -14,15 +14,15 @@ interface MapComponentProps {
   center: Center;
   className?: string;
   defaultLayer?: number;
-  layers: string[] | string | never;
+  layers: string[] | string;
   onDebug?: ({ bounds, center, zoom }: Debuggable) => void;
   onReady?: (evt: ReadyEvent) => void;
   tilesExtension?: string;
-  tilesURL: string | never;
+  tilesURL: string;
   zoom: Zoom;
 }
 
-export const MapComponent: React.FC<MapComponentProps> = React.memo(
+export const MapComponent = React.memo(
   (props: MapComponentProps) => {
     const leafletMap = useRef<Map | null>(null);
 
@@ -102,14 +102,5 @@ export const MapComponent: React.FC<MapComponentProps> = React.memo(
     return MapElement;
   }
 );
-
-MapComponent.defaultProps = {
-  bounds: undefined,
-  className: undefined,
-  defaultLayer: undefined,
-  onDebug: undefined,
-  onReady: undefined,
-  tilesExtension: undefined,
-};
 
 MapComponent.displayName = 'MapComponent';

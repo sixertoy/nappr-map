@@ -10,10 +10,10 @@ interface MapLayersGroupComponentProps {
   tilesURL: string;
 }
 
-export const MapLayersGroupComponent: React.FC<MapLayersGroupComponentProps> =
+export const MapLayersGroupComponent =
   React.memo(
     ({
-      activeLayer,
+      activeLayer = undefined,
       tilesExtension,
       layers,
       onClick,
@@ -45,9 +45,5 @@ export const MapLayersGroupComponent: React.FC<MapLayersGroupComponentProps> =
       );
     }
   );
-
-MapLayersGroupComponent.defaultProps = {
-  activeLayer: undefined,
-};
 
 MapLayersGroupComponent.displayName = 'MapLayersGroupComponent';

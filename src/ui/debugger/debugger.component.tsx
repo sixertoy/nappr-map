@@ -3,14 +3,15 @@ import React, { useCallback, useRef } from 'react';
 import { useMapEvent } from 'react-leaflet';
 
 import { Debuggable } from '../../interfaces';
+import { Timeout } from '../../types';
 
 interface MapDebuggerComponentProps {
   onDebug?: ({ center, zoom, bounds }: Debuggable) => void;
 }
 
-export const MapDebuggerComponent: React.FC<MapDebuggerComponentProps> =
-  React.memo(({ onDebug }: MapDebuggerComponentProps) => {
-    const timer = useRef<NodeJS.Timeout | undefined>(undefined);
+export const MapDebuggerComponent =
+  React.memo(({ onDebug = undefined }: MapDebuggerComponentProps) => {
+    const timer = useRef<Timeout | undefined>(undefined);
 
     const onClick = useCallback(({ latlng }: { latlng: LatLng }) => {
       /* eslint-disable */
@@ -20,10 +21,10 @@ export const MapDebuggerComponent: React.FC<MapDebuggerComponentProps> =
       /* eslint-enable */
     }, []);
 
-    const onMoveEnd = useCallback(
+    const onMoveEnd = useCallback (
       ({ target }: { target: Map }) => {
         if (timer.current) return;
-        timer.current = setTimeout(() => {
+        timer.current = setTimeout (() => {
           const zoom = target.getZoom();
           const center = target.getCenter();
           const bounds = target.getBounds();
@@ -45,7 +46,7 @@ export const MapDebuggerComponent: React.FC<MapDebuggerComponentProps> =
 
     const onMoveStart = useCallback(() => {
       if (!timer || !timer.current) return;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
       clearTimeout(timer.current);
     }, []);
 
@@ -55,9 +56,5 @@ export const MapDebuggerComponent: React.FC<MapDebuggerComponentProps> =
 
     return null;
   });
-
-MapDebuggerComponent.defaultProps = {
-  onDebug: undefined,
-};
 
 MapDebuggerComponent.displayName = 'MapDebuggerComponent';

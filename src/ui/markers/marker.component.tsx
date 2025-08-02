@@ -3,7 +3,6 @@ import React, { useCallback, useMemo } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Marker, Tooltip } from 'react-leaflet';
 
-import { IconComponent } from '../icon';
 
 interface MapMarkerComponentProps {
   background: string;
@@ -16,15 +15,12 @@ interface MapMarkerComponentProps {
   uid: string;
 }
 
-export const MapMarkerComponent: React.FC<MapMarkerComponentProps> = React.memo(
+export const MapMarkerComponent = React.memo(
   ({
-    background,
-    color,
-    icon,
+    background ,
     label,
     latlng,
     onClick,
-    size,
     uid,
   }: MapMarkerComponentProps) => {
     const DOMString = useMemo(
@@ -42,14 +38,14 @@ export const MapMarkerComponent: React.FC<MapMarkerComponentProps> = React.memo(
                   textAlign: 'center',
                   width: 28,
                 }}>
-                {icon && (
+                {/* {icon && (
                   <IconComponent icon={icon} iconProps={{ color, size }} />
-                )}
+                )} */}
               </div>
             </div>
           </div>
         ),
-      [uid, background, icon, color, size]
+      [uid, background]
     );
 
     const clickHandler = useCallback(() => {
@@ -82,10 +78,5 @@ export const MapMarkerComponent: React.FC<MapMarkerComponentProps> = React.memo(
     );
   }
 );
-
-MapMarkerComponent.defaultProps = {
-  onClick: undefined,
-  size: undefined,
-};
 
 MapMarkerComponent.displayName = 'MapMarkerComponent';

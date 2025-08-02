@@ -12,14 +12,14 @@ interface MapLayersControlsComponentProps {
   tilesURL: string;
 }
 
-export const MapLayersControlsComponent: React.FC<MapLayersControlsComponentProps> =
+export const MapLayersControlsComponent =
   React.memo(
     ({
-      activeLayer,
+      activeLayer = undefined,
       tilesExtension,
       layers,
       onChange,
-      position,
+      position = undefined,
       tilesURL,
     }: MapLayersControlsComponentProps) => {
       const mounted = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ export const MapLayersControlsComponent: React.FC<MapLayersControlsComponentProp
       }, []);
 
       const positionClassname = position || ControlsPosition.BOTTOM_RIGHT;
-      const iconName = visibility ? 'IoCloseOutline' : 'IoChevronBackOutline';
+      // const iconName = visibility ? 'IoCloseOutline' : 'IoChevronBackOutline';
       return (
         <div className="leaflet-control-container">
           <div ref={mounted} className={positionClassname}>
@@ -92,10 +92,5 @@ export const MapLayersControlsComponent: React.FC<MapLayersControlsComponentProp
       );
     }
   );
-
-MapLayersControlsComponent.defaultProps = {
-  activeLayer: undefined,
-  position: undefined,
-};
 
 MapLayersControlsComponent.displayName = 'MapLayersControlsComponent';
