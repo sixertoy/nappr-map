@@ -10,8 +10,8 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     build: {
-      minify: isDevelopment,
-      sourcemap: isDevelopment,
+      minify: true,
+      sourcemap: true,
       watch: isDevelopment ? {} : undefined,
       lib: {
         entry: resolve('src', 'index.ts'),
@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
         output: {
           globals: {
             react: 'React',
+            'react-dom': 'ReactDOM',
             'react-leaflet': 'reactLeaflet',
             leaflet: 'Leaflet',
           },

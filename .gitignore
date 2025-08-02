@@ -207,3 +207,4 @@ config.build.json
 lib
 dist
 types
+!src/**/types
