@@ -17,6 +17,7 @@
   "module": "./dist/nappr-map.es.js",
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "import": "./dist/nappr-map.es.js",
       "require": "./dist/nappr-map.umd.js"
     },
