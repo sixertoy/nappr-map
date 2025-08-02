@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       sourcemap: true,
       watch: isDevelopment ? {} : undefined,
       lib: {
-        entry: resolve('src', 'index.ts'),
+        entry: resolve(__dirname, 'src', 'index.ts'),
         name: 'NapprMap',
         formats: ['es', 'umd'],
         fileName: format => `nappr-map.${format}.js`,
