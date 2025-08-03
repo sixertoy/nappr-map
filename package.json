@@ -1,6 +1,6 @@
 {
   "name": "@nappr/map",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "Leaflet Interactive React Map",
   "author": "Matthieu <sixertoy.github@gmail.com>",
   "license": "MIT",
@@ -42,12 +42,12 @@
     "react-leaflet": "^5.0.0"
   },
   "peerDependencies": {
+    "@types/leaflet": "^5.0.0",
     "leaflet": "^1.9.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
-    "react-leaflet": "^5.0.0",
-    "@types/leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
