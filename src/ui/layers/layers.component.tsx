@@ -8,7 +8,7 @@ import { MapLayersControlsComponent } from './layers-controls.component';
 import { MapLayersGroupComponent } from './layers-group.component';
 
 interface MapLayersComponentProps {
-  onClick: (evt: MapMouseEvent) => void;
+  onClick?: (evt: MapMouseEvent) => void;
 }
 
 export const MapLayersComponent: React.FC<MapLayersComponentProps> = React.memo(
@@ -23,7 +23,8 @@ export const MapLayersComponent: React.FC<MapLayersComponentProps> = React.memo(
 
     const layerClickHandler = useCallback(
       (evt: LeafletMouseEvent, layerid: number | undefined) => {
-        if (!evt.originalEvent.isTrusted) {
+        const shouldPropagate = evt.originalEvent.isTrusted && onClick && layerid
+        if (!shouldPropagate) {
           return;
         }
         const { latlng } = evt;

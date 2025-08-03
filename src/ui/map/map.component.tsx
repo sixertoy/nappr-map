@@ -1,5 +1,5 @@
 import Leaflet, { Map } from 'leaflet';
-import React, { PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
 import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import { MapLayersProvider } from '../../contexts';
@@ -19,7 +19,7 @@ interface MapComponentProps extends PropsWithChildren {
   tilesExtension?: string;
   tilesURL: string;
   zoom: Zoom;
-  onClick: (evt: MapMouseEvent) => void;
+  onClick?: (evt: MapMouseEvent) => void;
 }
 
 export const MapComponent = React.memo(
@@ -27,24 +27,30 @@ export const MapComponent = React.memo(
     const [map, setMap] = useState<Map | null>(null)
 
     const {
-      bounds,
+      bounds = undefined,
       center,
-      className,
-      defaultLayer,
+      className = undefined,
+      defaultLayer = undefined,
       children,
       layers,
-      onDebug,
-      onReady,
-      onClick,
-      tilesExtension,
+      onDebug = undefined,
+      onReady = undefined,
+      onClick = undefined,
+      tilesExtension = undefined,
       tilesURL,
-      onLayerChange,
+      onLayerChange = undefined,
       zoom,
     } = props;
 
     const mapReadyHandler = useCallback(() => {
       if (onReady) {
         onReady({ map, type: 'ready' });
+      }
+    }, [map, onReady]);
+
+    useEffect(() => {
+      if(map && onReady) {
+        onReady({ map, type: 'initialized' });
       }
     }, [map, onReady]);
 
@@ -88,20 +94,7 @@ export const MapComponent = React.memo(
           ) */}
         </MapContainer>
       );
-    }, [
-      bounds,
-      center,
-      className,
-      defaultLayer,
-      layers,
-      mapReadyHandler,
-      onClick,
-      onDebug,
-      children,
-      tilesExtension,
-      tilesURL,
-      zoom,
-    ]);
+    }, [bounds, center, children, className, defaultLayer, layers, mapReadyHandler, onClick, onDebug, onLayerChange, tilesExtension, tilesURL, zoom]);
 
     return MapElement;
   }
