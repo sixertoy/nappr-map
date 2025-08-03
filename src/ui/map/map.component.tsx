@@ -1,15 +1,16 @@
 import Leaflet, { Map } from 'leaflet';
+import { LatLngBoundsExpression, LatLngLiteral } from 'leaflet';
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from 'react';
 import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import { MapLayersProvider } from '../../contexts';
-import { Bounds, Center, MapDebuggable, MapMouseEvent, MapReadyEvent, Zoom } from '../../interfaces';
+import {MapDebuggable, MapMouseEvent, MapReadyEvent, Zoom } from '../../interfaces';
 import { MapDebuggerComponent } from '../debugger';
 import { MapLayersComponent } from '../layers/layers.component';
 
 interface MapComponentProps extends PropsWithChildren {
-  bounds?: Bounds;
-  center: Center;
+  bounds?: LatLngBoundsExpression | undefined;
+  center: LatLngLiteral;
   className?: string;
   defaultLayer?: number;
   layers: string[] | string;
