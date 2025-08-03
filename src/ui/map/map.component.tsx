@@ -1,5 +1,5 @@
 import Leaflet, { Map } from 'leaflet';
-import React, { PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from 'react';
 import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import { MapLayersProvider } from '../../contexts';
@@ -24,6 +24,8 @@ interface MapComponentProps extends PropsWithChildren {
 
 export const MapComponent = React.memo(
   (props: MapComponentProps) => {
+    const initialized = useRef(false);
+
     const [map, setMap] = useState<Map | null>(null)
 
     const {
@@ -42,15 +44,10 @@ export const MapComponent = React.memo(
       zoom,
     } = props;
 
-    const mapReadyHandler = useCallback(() => {
-      if (onReady) {
-        onReady({ map, type: 'ready' });
-      }
-    }, [map, onReady]);
-
     useEffect(() => {
-      if(map && onReady) {
-        onReady({ map, type: 'initialized' });
+      if(map && onReady && !initialized.current) {
+        initialized.current = true;
+        onReady({ map, type: 'ready' });
       }
     }, [map, onReady]);
 
@@ -71,7 +68,6 @@ export const MapComponent = React.memo(
           maxZoom={zoom.max}
           minZoom={zoom.min}
           wheelPxPerZoomLevel={256}
-          whenReady={mapReadyHandler}
           zoom={zoom.current}
           zoomControl={false}>
           {onDebug && <MapDebuggerComponent onDebug={onDebug} />}
@@ -94,7 +90,21 @@ export const MapComponent = React.memo(
           ) */}
         </MapContainer>
       );
-    }, [bounds, center, children, className, defaultLayer, layers, mapReadyHandler, onClick, onDebug, onLayerChange, tilesExtension, tilesURL, zoom]);
+    },
+    [
+      bounds,
+      center,
+      children,
+      className,
+      defaultLayer,
+      layers,
+      onClick,
+      onDebug,
+      onLayerChange,
+      tilesExtension,
+      tilesURL,
+      zoom
+    ]);
 
     return MapElement;
   }
