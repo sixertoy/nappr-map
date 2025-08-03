@@ -3,7 +3,7 @@ import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from '
 import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import { MapLayersProvider } from '../../contexts';
-import { Bounds, Center, Debuggable, MapMouseEvent, ReadyEvent, Zoom } from '../../interfaces';
+import { Bounds, Center, MapDebuggable, MapMouseEvent, MapReadyEvent, Zoom } from '../../interfaces';
 import { MapDebuggerComponent } from '../debugger';
 import { MapLayersComponent } from '../layers/layers.component';
 
@@ -13,9 +13,9 @@ interface MapComponentProps extends PropsWithChildren {
   className?: string;
   defaultLayer?: number;
   layers: string[] | string;
-  onDebug?: ({ bounds, center, zoom }: Debuggable) => void;
+  onDebug?: ({ bounds, center, zoom }: MapDebuggable) => void;
   onLayerChange?: (layer: string) => void;
-  onReady?: (evt: ReadyEvent) => void;
+  onReady?: (evt: MapReadyEvent) => void;
   tilesExtension?: string;
   tilesURL: string;
   zoom: Zoom;

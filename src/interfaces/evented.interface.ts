@@ -1,13 +1,13 @@
 import { LatLng, LatLngBounds, Map } from 'leaflet';
 
-export interface Debuggable {
+export interface MapDebuggable {
   center: LatLng;
   zoom: number;
   bounds: LatLngBounds;
 }
 
-export interface ReadyEvent {
-  map: Map | null;
+export interface MapReadyEvent {
+  map: Map;
   type: string;
 }
 
