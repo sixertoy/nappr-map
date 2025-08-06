@@ -4,9 +4,10 @@ import typescriptParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import sortDestructureKeys from 'eslint-plugin-sort-destructure-keys';
 import sortKeysFix from 'eslint-plugin-sort-keys-fix';
-import prettier from 'eslint-config-prettier';
 import globals from 'globals';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default [
   // Global ignores
@@ -15,20 +16,9 @@ export default [
       'node_modules/**',
       'dist/**',
       'build/**',
-      'coverage/**',
-      '*.min.js',
-      '.next/**',
-      'out/**',
       'public/**',
-      '*.config.js',
-      '*.config.ts',
-      '.eslintrc.*',
-      'vite.config.*',
-      'vitest.config.*',
-      'jest.config.*',
-      'tailwind.config.*',
-      'postcss.config.*',
-    ]
+      'coverage/**',
+    ],
   },
   js.configs.recommended,
   {
@@ -49,10 +39,11 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescript,
-      'react': react,
+      react: react,
       'react-hooks': reactHooks,
       'simple-import-sort': simpleImportSort,
       'sort-keys-fix': sortKeysFix,
+      'sort-destructure-keys': sortDestructureKeys,
     },
     rules: {
       ...typescript.configs.recommended.rules,
@@ -84,5 +75,5 @@ export default [
       },
     },
   },
-  prettier,
+  eslintPluginPrettierRecommended,
 ];

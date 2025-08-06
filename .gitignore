@@ -207,4 +207,5 @@ config.build.json
 lib
 dist
 types
+package-lock.json
 !src/**/types

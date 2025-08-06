@@ -1,1 +1,1 @@
-export type Timeout = ReturnType<typeof setTimeout>;
+export type TimeoutType = ReturnType<typeof setTimeout>;

@@ -3,15 +3,16 @@ import React, { useCallback, useMemo } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Marker, Tooltip } from 'react-leaflet';
 
+import { MapIconType } from '../../types';
 
 interface MapMarkerComponentProps {
   background?: string;
   color?: string;
-  // icon: string;
+  icon?: MapIconType;
   label: string;
   latlng: LatLngLiteral;
   onClick?: ({ type, uid }: { type: string; uid: string }) => void | undefined;
-  size?: string | undefined;
+  size?: number;
   uid: string;
 }
 
@@ -20,6 +21,9 @@ export const MapMarkerComponent = React.memo(
     background = '#000',
     label,
     latlng,
+    size = 24,
+    color = '#FFFFFF',
+    icon: Icon = undefined,
     onClick,
     uid,
   }: MapMarkerComponentProps) => {
@@ -38,18 +42,18 @@ export const MapMarkerComponent = React.memo(
                   textAlign: 'center',
                   width: 28,
                 }}>
-                {/* {icon && (
-                  <IconComponent icon={icon} iconProps={{ color, size }} />
-                )} */}
+                {Icon && <Icon color={color} size={size} />}
               </div>
             </div>
-          </div>
+          </div>,
         ),
-      [uid, background]
+      [background, color, Icon, size, uid],
     );
 
     const clickHandler = useCallback(() => {
-      if (!onClick) return;
+      if (!onClick) {
+        return;
+      }
       onClick({ type: 'marker', uid });
     }, [uid, onClick]);
 
@@ -76,7 +80,7 @@ export const MapMarkerComponent = React.memo(
         )}
       </Marker>
     );
-  }
+  },
 );
 
 MapMarkerComponent.displayName = 'MapMarkerComponent';

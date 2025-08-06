@@ -1,0 +1,9 @@
+.bar {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 38px;
+  justify-content: center;
+  vertical-align: middle;
+  width: auto;
+}

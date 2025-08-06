@@ -29,6 +29,39 @@
   }
 
   &.leaflet-container {
+    .leaflet-control-container {
+      .leaflet-center,
+      .leaflet-middle {
+        position: absolute;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      .leaflet-middle {
+        top: 50%;
+      }
+
+      .leaflet-center {
+        left: 50%;
+      }
+
+      // .leaflet-top .leaflet-control {
+      //   margin-top: 10px;
+      // }
+
+      // .leaflet-bottom .leaflet-control {
+      //   margin-bottom: 10px;
+      // }
+
+      // .leaflet-left .leaflet-control {
+      //   margin-left: 10px;
+      // }
+
+      // .leaflet-right .leaflet-control {
+      //   margin-right: 10px;
+      // }
+    }
+
     .leaflet-div-icon {
       background: none !important;
       border: 0 !important;

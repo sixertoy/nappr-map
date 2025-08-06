@@ -1,3 +1,3 @@
 export * from './evented.interface';
-export * from './map-context.interface';
-export * from './zoom.interface';
+export * from './map-change-event.interface';
+export * from './map-config.interface';
