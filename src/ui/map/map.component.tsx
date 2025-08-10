@@ -1,11 +1,10 @@
 import Leaflet from 'leaflet';
 import React, { PropsWithChildren, RefObject } from 'react';
-import { MapContainer, ZoomControl } from 'react-leaflet';
+import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import {
   MapConfigLayer,
   MapControlsLayer,
-  MapMarkersLayer,
   MapTilesLayer,
 } from '../../components';
 import { MapControlsPosition } from '../../enums';
@@ -50,7 +49,6 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
   const hasLayers = layers && layers.length > 0;
 
   const showLayers = !!(hasTiles && hasLayers);
-  const showConfigLayer = configMode && onMapChange;
 
   return (
     <MapContainer
@@ -70,12 +68,14 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
       zoomControl={false}>
       <React.Fragment>
         <ZoomControl position={zoomPosition} />
-        {showConfigLayer && (
+        {/* <!-- config layer --> */}
+        {configMode && (
           <MapConfigLayer
             config={mapConfig}
             onConfigChange={onMapConfigChange}
           />
         )}
+        {/* <!-- controls layer layer --> */}
         {showLayers && (
           <MapControlsLayer
             activeLayerIndex={activeLayerIndex}
@@ -86,7 +86,9 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
             onChange={onLayerChange}
           />
         )}
-        <MapMarkersLayer>{children}</MapMarkersLayer>
+        {/* <!-- markers layer --> */}
+        <LayerGroup>{children}</LayerGroup>
+        {/* <!-- tiles layer --> */}
         {showLayers && (
           <MapTilesLayer
             activeLayerIndex={activeLayerIndex}
