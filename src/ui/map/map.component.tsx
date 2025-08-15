@@ -2,6 +2,7 @@ import Leaflet from 'leaflet';
 import React, { PropsWithChildren, RefObject } from 'react';
 import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
+import packageJson from '../../../package.json';
 import {
   MapConfigLayer,
   MapControlsLayer,
@@ -24,6 +25,7 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
   const {
     config,
     children,
+    debugMode = false,
     configMode = false,
     className = undefined,
     onMapChange = undefined,
@@ -40,6 +42,10 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
     config,
     onMapChange,
   });
+
+  if (debugMode) {
+    console.log('MapComponent version', packageJson.version);
+  }
 
   const zoomPosition = configMode ? 'topleft' : 'topright';
   const classname = `nappr-map__container ${className || ''}`.trim();
