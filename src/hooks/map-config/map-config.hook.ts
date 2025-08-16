@@ -21,6 +21,8 @@ export const useMapConfig = ({ config, onMapChange }: UseMapConfigProps) => {
     layers: config.current.layers,
     tiles: {
       extension: config.current.tiles?.extension || 'png',
+      maxLevel: config.current.tiles?.maxLevel || 18,
+      minLevel: config.current.tiles?.minLevel || 0,
       url: config.current.tiles.url,
     },
     zoom: {

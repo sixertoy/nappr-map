@@ -7,6 +7,8 @@ interface MapTilesLayerProps {
   url?: string;
   extension?: string;
   layers?: string[];
+  maxTilesLevel?: number;
+  minTilesLevel?: number;
   onClick?: (event: LeafletMouseEvent) => void;
 }
 
@@ -16,6 +18,8 @@ export const MapTilesLayer = React.memo(
     extension = 'png',
     layers = [],
     activeLayerIndex,
+    maxTilesLevel = 18,
+    minTilesLevel = 0,
     url,
   }: MapTilesLayerProps) => {
     useMapEvent('click', onClick);
@@ -31,6 +35,8 @@ export const MapTilesLayer = React.memo(
               <TileLayer
                 key={key}
                 errorTileUrl="/tiles/blank.png"
+                maxNativeZoom={maxTilesLevel}
+                minNativeZoom={minTilesLevel}
                 tileSize={256}
                 url={uri}
               />

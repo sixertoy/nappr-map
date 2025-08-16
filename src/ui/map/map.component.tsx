@@ -93,6 +93,8 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
             activeLayerIndex={activeLayerIndex}
             extension={mapConfig.tiles.extension}
             layers={mapConfig.layers}
+            maxTilesLevel={mapConfig.tiles.maxLevel}
+            minTilesLevel={mapConfig.tiles.minLevel}
             url={mapConfig.tiles.url}
             onClick={onLayerClick}
           />
