@@ -1,12 +1,14 @@
-import type { MapBoundsType, MapLatLngType, MapZoomType } from '../interfaces';
+import {
+  MapBoundsType,
+  MapLatLngType,
+  MapTilesType,
+  MapZoomType,
+} from '../types';
 
 export type MapConfigInterface = {
   bounds?: MapBoundsType;
   center?: MapLatLngType;
   layers: string[];
-  tiles: {
-    extension?: string;
-    url: string;
-  };
+  tiles: MapTilesType;
   zoom?: MapZoomType;
 };

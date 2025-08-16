@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MapIconBaseProps } from '../../interfaces';
+import { MapIconBaseProps } from '../../types';
 
 export const MapZoomMinIcon = React.memo(
   ({ size = 48, color = 'currentColor' }: MapIconBaseProps) => (

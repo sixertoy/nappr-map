@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Marker, Tooltip } from 'react-leaflet';
 
-import { MapIconType } from '../../interfaces';
+import { MapIconType } from '../../types';
 
 interface MapMarkerComponentProps {
   background?: string;
