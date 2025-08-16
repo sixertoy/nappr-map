@@ -68,8 +68,8 @@
   }
 }
 
-.nappr-map__ {
-  &__tooltip {
+.nappr-map__container {
+  .nappr-map__tooltip {
     background: #202630;
     border-color: #202630;
     color: #fff;
@@ -79,7 +79,7 @@
     }
   }
 
-  &__layer-toggle-button {
+  .nappr-map__layer-toggle-button {
     border: 0;
     border-radius: 2px;
     display: block;
@@ -87,7 +87,7 @@
     width: 38px;
   }
 
-  &__layer-button {
+  .nappr-map__layer-button {
     background: #fff;
     border: 0;
     border-radius: 2px;
@@ -103,7 +103,7 @@
     }
   }
 
-  &__control-layer-bar {
+  .nappr-map__control-layer-bar {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -111,6 +111,21 @@
     justify-content: center;
     vertical-align: middle;
     width: auto;
+  }
+
+  .nappr-map__config-button {
+    color: #fff;
+  }
+
+  .nappr-map__zoom-debugger {
+    text-align: center;
+    font-size: 12px;
+    height: 24px;
+    width: 24px;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    line-height: 24px;
   }
 }
 
