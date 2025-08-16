@@ -2,7 +2,7 @@ import { LeafletMouseEvent, Map } from 'leaflet';
 import { useCallback, useRef } from 'react';
 import { useMapEvents } from 'react-leaflet';
 
-import { TimeoutType } from '../../types';
+import { TimeoutType } from '../../interfaces';
 
 export const MapDebuggerLayer = () => {
   const timer = useRef<TimeoutType | undefined>(undefined);

@@ -1,7 +1,7 @@
 import { Map } from 'leaflet';
 
 import { MapEventTypes } from '../enums';
-import { MapLatLngType } from '../types';
+import { MapLatLngType } from '../interfaces';
 
 export interface MapChangeEvent {
   type: MapEventTypes;

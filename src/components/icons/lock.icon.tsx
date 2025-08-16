@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MapIconBaseProps } from '../../types';
+import { MapIconBaseProps } from '../../interfaces';
 
 export const LockIcon = React.memo(
   ({ size = 48, color = 'currentColor' }: MapIconBaseProps) => (

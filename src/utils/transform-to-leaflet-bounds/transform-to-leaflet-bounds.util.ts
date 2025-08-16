@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-import { MapBoundsType } from '../../types';
+import { MapBoundsType } from '../../interfaces';
 
 export const toLeafletBounds = (bounds: MapBoundsType | undefined) => {
   if (!bounds || !bounds.southWest || !bounds.northEast) {

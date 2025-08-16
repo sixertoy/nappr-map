@@ -1,4 +1,4 @@
-import type { MapBoundsType, MapLatLngType, MapZoomType } from '../types';
+import type { MapBoundsType, MapLatLngType, MapZoomType } from '../interfaces';
 
 export type MapConfigInterface = {
   bounds?: MapBoundsType;
