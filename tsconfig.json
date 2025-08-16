@@ -1,31 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    /* Paramètres de compilation de base */
+    "target": "ES2020",
     "module": "ESNext",
-    "skipLibCheck": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    /* Intégration de React */
     "jsx": "react-jsx",
+    "isolatedModules": true,
 
-    /* Linting */
+    /* Génération de la librairie */
+    "outDir": "./dist",
+    "rootDir": "./src",
+
+    /* Contrôle des types et de la syntaxe */
     "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
 
-    /* mine */
-    "allowJs": true,
-    "esModuleInterop": true,
-    "noEmit": false,
-    "outDir": "./types",
-    "declaration": true,
-    "emitDeclarationOnly": true
+    /* Résolution des modules */
+    "moduleResolution": "node"
   },
-  "exclude": ["build", "dist", "node_modules", "lib", "vite.config.ts"],
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

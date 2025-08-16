@@ -1,7 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
 
-import styles from './layer-button.module.css';
-
 interface LayerButtonProps {
   layerSlug: string;
   index: number;
@@ -29,14 +27,13 @@ export const LayerButton = React.memo(
     return (
       <button
         aria-label={`Select layer ${layerSlug}`}
-        className={styles.layer}
+        className={'nappr-map__layer-button'}
         type="button"
         onClick={handleClick}>
         <picture>
           <source srcSet={srcSet} type={`image/${extension}`} />
           <img
             alt={`Layer ${layerSlug} thumbnail`}
-            className={styles.img}
             height={32}
             loading="lazy"
             src={fallbackSrc}

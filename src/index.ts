@@ -1,5 +1,4 @@
-import 'leaflet/dist/leaflet.css';
-import './nappr-map.scss';
+import './styles.scss';
 
 export * from './enums';
 export * from './interfaces';

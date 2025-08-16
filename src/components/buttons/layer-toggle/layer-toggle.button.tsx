@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 
 import { MapBackIcon, MapCloseIcon } from '../../icons';
-import styles from './layer-toggle-button.module.css';
 
 interface LayerToggleButtonProps {
   opened: boolean;
@@ -21,7 +20,7 @@ export const LayerToggleButton = React.memo(
       <button
         aria-expanded={opened}
         aria-label={ariaLabel}
-        className={styles.button}
+        className={'nappr-map__layer-toggle-button'}
         type="button"
         onClick={toggleTilesMenu}>
         {toggleIcon}

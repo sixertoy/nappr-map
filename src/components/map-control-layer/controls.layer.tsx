@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { MapControlsPosition } from '../../enums';
 import { useToggle } from '../../hooks';
 import { LayerButton, LayerToggleButton } from '../buttons';
-import styles from './controls.module.css';
 
 interface MapControlsLayerProps {
   layers?: string[];
@@ -59,7 +58,7 @@ export const MapControlsLayer = React.memo(
       <div ref={mountedRef} className="leaflet-control-container">
         <div className={positionClassName}>
           <div className="leaflet-bar leaflet-control no-no-border">
-            <div className={styles.bar}>
+            <div className={'nappr-map__control-layer-bar'}>
               <LayerToggleButton
                 opened={opened}
                 toggleTilesMenu={toggleTilesMenu}

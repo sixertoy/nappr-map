@@ -1,39 +1,51 @@
-import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
-import * as packageJson from './package.json';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import dts from 'vite-plugin-dts';
 
-// https://vitejs.dev/config/#configuring-vite 🤷
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   const isDevelopment = env.VITE_USER_NODE_ENV === 'development';
+
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+      // Ce plugin génère automatiquement les fichiers de types (.d.ts)
+      // et les place dans votre dossier dist.
+      dts({
+        outDir: 'dist/types',
+        insertTypesEntry: true,
+      }),
+    ],
     build: {
       minify: true,
       sourcemap: true,
       watch: isDevelopment ? {} : undefined,
       lib: {
-        entry: resolve(__dirname, 'src', 'index.ts'),
+        entry: path.resolve(__dirname, 'src', 'index.ts'),
         name: 'napprMap',
         formats: ['es', 'umd'],
         fileName: (format) => `nappr-map.${format}.js`,
-        cssFileName: 'styles',
       },
       rollupOptions: {
+        external: [
+          'react',
+          'react-dom',
+          'leaflet',
+          'react-leaflet',
+          'react/jsx-runtime',
+          'react-dom/server',
+        ],
         output: {
           globals: {
             react: 'React',
-            leaflet: 'Leaflet',
             'react-dom': 'ReactDOM',
             'react-leaflet': 'ReactLeaflet',
+            leaflet: 'L',
             'react/jsx-runtime': 'jsxRuntime',
+            'react-dom/server': 'ReactDOMServer',
           },
         },
-        external: [
-          ...Object.keys(packageJson.peerDependencies || {}),
-          'react/jsx-runtime',
-        ],
       },
     },
   };
