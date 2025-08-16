@@ -1,6 +1,6 @@
 {
   "name": "@nappr/map",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Leaflet Interactive React Map",
   "author": "Matthieu <sixertoy.github@gmail.com>",
   "license": "MIT",
