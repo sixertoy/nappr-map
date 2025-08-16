@@ -1,6 +1,6 @@
 import { LatLngBounds } from 'leaflet';
 
-import { MapBoundsType } from '../../interfaces';
+import { MapBoundsType } from '../../types';
 
 export const transformToMapBoundsType = (
   bounds: LatLngBounds | undefined,

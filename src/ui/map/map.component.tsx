@@ -15,7 +15,6 @@ import { toLeafletBounds } from '../../utils';
 interface MapComponentProps extends PropsWithChildren {
   config: RefObject<MapConfigInterface>;
   className?: string;
-  debugMode?: boolean;
   configMode?: boolean;
   onMapChange?: (evt: MapChangeEvent) => void;
 }
@@ -24,7 +23,6 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
   const {
     config,
     children,
-    // debugMode = false,
     configMode = false,
     className = undefined,
     onMapChange = undefined,
