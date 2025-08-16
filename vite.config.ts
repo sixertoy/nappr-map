@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
         name: 'napprMap',
         formats: ['es', 'umd'],
         fileName: (format) => `nappr-map.${format}.js`,
+        cssFileName: 'styles',
       },
       rollupOptions: {
         external: [

@@ -12,7 +12,7 @@ yarn add @nappr/map
 
 ```javascript
 import 'leaflet/dist/leaflet.css';
-import '@nappr/map/dist/nappr-map.css';
+import '@nappr/map/dist/styles.css';
 
 import { MapComponent } from '@nappr/map';
 import { AttributionControl } from 'react-leaflet';

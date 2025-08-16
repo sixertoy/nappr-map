@@ -23,7 +23,7 @@
       "import": "./dist/nappr-map.es.js",
       "require": "./dist/nappr-map.umd.js"
     },
-    "./dist/nappr-map.css": "./dist/nappr-map.css"
+    "./dist/styles.css": "./dist/styles.css"
   },
   "bugs": {
     "url": "https://github.com/sixertoy/nappr-map/issues"
