@@ -24,6 +24,7 @@ export const useMapConfig = ({ config, onMapChange }: UseMapConfigProps) => {
     (type: MapEventTypes, data?: Pick<MapChangeEvent, 'latlng' | 'config'>) => {
       if (onMapChange) {
         onMapChange({
+          config: data?.config,
           latlng: data?.latlng || map.current?.getCenter(),
           layerId: activeLayerIndex,
           map: map.current,
@@ -40,7 +41,7 @@ export const useMapConfig = ({ config, onMapChange }: UseMapConfigProps) => {
       setMapConfig(next);
       mapChangeHandler(MapEventTypes.CONFIG_CHANGE, { config: next });
     },
-    [],
+    [mapChangeHandler, mapConfig],
   );
 
   const layerClickHandler = useCallback(
