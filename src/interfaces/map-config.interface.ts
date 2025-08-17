@@ -6,9 +6,9 @@ import {
 } from '../types';
 
 export type MapConfigInterface = {
-  bounds?: MapBoundsType;
-  center?: MapLatLngType;
+  bounds?: MapBoundsType | null;
+  center?: MapLatLngType | null;
   layers: string[];
   tiles: MapTilesType;
-  zoom?: MapZoomType;
+  zoom?: MapZoomType | null;
 };

@@ -1,6 +1,6 @@
 export enum MapEventTypes {
   CLICK = 'click',
   LAYER_CHANGE = 'layer-change',
-  MOVE = 'move',
   READY = 'ready',
+  CONFIG_CHANGE = 'config-change',
 }

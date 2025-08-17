@@ -26,7 +26,7 @@ export const ZoomMaxControl = React.memo(
       const nextIcon = next ? LockIcon : MapZoomMaxIcon;
 
       setIcon(nextIcon);
-      onChange({ zoom: { max: next } });
+      onChange({ zoom: { max: next === undefined ? null : next } });
       leafleftMap.setMaxZoom(next as number);
     }, [leafleftMap, onChange]);
 

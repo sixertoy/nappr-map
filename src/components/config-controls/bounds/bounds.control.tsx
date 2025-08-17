@@ -52,7 +52,7 @@ export const BoundsControl = React.memo(
         : undefined;
       leafleftMap.setMaxBounds(nextMaxBounds);
 
-      const configBounds = hasBounds ? bounds : undefined;
+      const configBounds = hasBounds ? bounds : null;
       onChange({ bounds: configBounds });
     }, [bounds, leafleftMap, onChange]);
 

@@ -27,13 +27,16 @@ export const MapConfigLayer = React.memo(
       }
     }, []);
 
+    const boundsValue = config.bounds || undefined;
+    const minZoomValue = config.zoom?.min || undefined;
+    const maxZoomValue = config.zoom?.max || undefined;
     return (
       <div ref={mountedRef} className="leaflet-control-container">
         <CenterControl onChange={onChange} />
-        <ZoomMinControl value={config.zoom?.min} onChange={onChange} />
-        <ZoomMaxControl value={config.zoom?.max} onChange={onChange} />
         <ZoomCurrentControl onChange={onChange} />
-        <BoundsControl value={config.bounds} onChange={onChange} />
+        <ZoomMinControl value={minZoomValue} onChange={onChange} />
+        <ZoomMaxControl value={maxZoomValue} onChange={onChange} />
+        <BoundsControl value={boundsValue} onChange={onChange} />
       </div>
     );
   },

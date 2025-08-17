@@ -1,25 +1,43 @@
 import { MapConfigInterface } from '../../interfaces';
 
 export const mergeMapConfig = (
-  config: MapConfigInterface,
-  update?: Partial<MapConfigInterface>,
+  base: MapConfigInterface,
+  update: Partial<MapConfigInterface>,
 ) => {
-  const mergedConfig: Partial<MapConfigInterface> = {
-    bounds: {
-      northEast: update?.bounds?.northEast || undefined,
-      southWest: update?.bounds?.southWest || undefined,
-    },
-    center: update?.center || { lat: -0.5, lng: 0.5 },
+  const { tiles, layers, center, bounds, zoom } = base;
+  const { url, extension = 'png', maxLevel = 18, minLevel = 0 } = tiles;
+
+  const nextBounds =
+    update.bounds === null ? undefined : update.bounds || bounds;
+
+  const zoomMax =
+    update.zoom?.max === null ? undefined : update.zoom?.max || zoom?.max;
+
+  const zoomMin =
+    update.zoom?.min === null ? undefined : update.zoom?.max || zoom?.min;
+
+  const zoomCurrent =
+    update.zoom?.current === null
+      ? undefined
+      : update.zoom?.current || zoom?.current;
+
+  const nextCenter =
+    update.center === null ? { lat: -0.5, lng: 0.5 } : update.center || center;
+
+  const mergedConfig: MapConfigInterface = {
+    bounds: nextBounds,
+    center: nextCenter,
+    layers,
     tiles: {
-      extension: update?.tiles?.extension || 'png',
-      maxLevel: update?.tiles?.maxLevel || 18,
-      minLevel: update?.tiles?.minLevel || 0,
-      url: update?.tiles?.url || '/titles/world',
+      extension,
+      maxLevel,
+      minLevel,
+      url,
     },
     zoom: {
-      current: update?.zoom?.current || 9,
-      max: config?.zoom?.max || 18,
-      min: config?.zoom?.min || 0,
+      current: zoomCurrent,
+      max: zoomMax,
+      min: zoomMin,
     },
   };
 

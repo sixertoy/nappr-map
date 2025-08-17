@@ -1,43 +1,27 @@
-import { LatLng, LeafletMouseEvent, Map } from 'leaflet';
+import type { Map } from 'leaflet';
+import { LeafletMouseEvent } from 'leaflet';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { MapEventTypes } from '../../enums';
 import { MapChangeEvent, MapConfigInterface } from '../../interfaces';
+import { mergeMapConfig } from '../../utils/merge-map-config';
 
 interface UseMapConfigProps {
   config: MapConfigInterface;
   onMapChange?: (evt: MapChangeEvent) => void;
 }
 
-export const useMapConfig = ({ onMapChange }: UseMapConfigProps) => {
+export const useMapConfig = ({ config, onMapChange }: UseMapConfigProps) => {
   const initialized = useRef(false);
 
   const map = useRef<Map | null>(null);
 
-  // const [mapConfig, setMapConfig] = useState<MapConfigInterface>({
-  //   bounds: {
-  //     northEast: config.current?.bounds?.northEast || undefined,
-  //     southWest: config.current?.bounds?.southWest || undefined,
-  //   },
-  //   center: config.current?.center || { lat: -0.5, lng: 0.5 },
-  //   layers: config.current.layers,
-  //   tiles: {
-  //     extension: config.current.tiles?.extension || 'png',
-  //     maxLevel: config.current.tiles?.maxLevel || 18,
-  //     minLevel: config.current.tiles?.minLevel || 0,
-  //     url: config.current.tiles.url,
-  //   },
-  //   zoom: {
-  //     current: config.current?.zoom?.current || 9,
-  //     max: config.current?.zoom?.max || 18,
-  //     min: config.current?.zoom?.min || 0,
-  //   },
-  // });
+  const [mapConfig, setMapConfig] = useState<MapConfigInterface>(config);
 
   const [activeLayerIndex, setActiveLayerIndex] = useState<number>(0);
 
   const mapChangeHandler = useCallback(
-    (type: MapEventTypes, data?: { latlng?: LatLng }) => {
+    (type: MapEventTypes, data?: Pick<MapChangeEvent, 'latlng' | 'config'>) => {
       if (onMapChange) {
         onMapChange({
           latlng: data?.latlng || map.current?.getCenter(),
@@ -52,10 +36,9 @@ export const useMapConfig = ({ onMapChange }: UseMapConfigProps) => {
 
   const configChangeHandler = useCallback(
     (data: Partial<MapConfigInterface>) => {
-      console.log('data', data);
-      // const next = mergeMapConfig(mapConfig, data);
-      // config.current = next;
-      // setMapConfig(next);
+      const next = mergeMapConfig(mapConfig, data);
+      setMapConfig(next);
+      mapChangeHandler(MapEventTypes.CONFIG_CHANGE, { config: next });
     },
     [],
   );
@@ -92,6 +75,5 @@ export const useMapConfig = ({ onMapChange }: UseMapConfigProps) => {
     layerChangeHandler,
     layerClickHandler,
     map,
-    // mapConfig,
   };
 };

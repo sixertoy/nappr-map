@@ -26,7 +26,7 @@ export const ZoomMinControl = React.memo(
       const nextIcon = next ? LockIcon : MapZoomMinIcon;
 
       setIcon(nextIcon);
-      onChange({ zoom: { min: next } });
+      onChange({ zoom: { min: next === undefined ? null : next } });
       leafleftMap.setMinZoom(next as number);
     }, [leafleftMap, onChange]);
 

@@ -52,7 +52,7 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
     const maxTilesLevel = tiles.maxLevel;
     const minTilesLevel = tiles.minLevel;
     const tilesExtension = tiles.extension;
-    const maxBounds = toLeafletBounds(bounds);
+    const maxBounds = bounds ? toLeafletBounds(bounds) : undefined;
 
     const showLayers = !!(tilesUrl && layers && layers.length > 0);
 
@@ -61,13 +61,13 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
         ref={map}
         attributionControl={false}
         bounceAtZoomLimits={false}
-        center={center}
+        center={center || undefined}
         className={classname}
         crs={Leaflet.CRS.Simple}
         doubleClickZoom={false}
         maxBounds={maxBounds}
-        maxZoom={maxZoom}
-        minZoom={minZoom}
+        maxZoom={maxZoom || undefined}
+        minZoom={minZoom || undefined}
         scrollWheelZoom={'center'}
         wheelPxPerZoomLevel={256}
         zoom={currentZoom}
