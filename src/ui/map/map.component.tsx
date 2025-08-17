@@ -1,5 +1,5 @@
 import Leaflet from 'leaflet';
-import React, { PropsWithChildren, RefObject } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 import { LayerGroup, MapContainer, ZoomControl } from 'react-leaflet';
 
 import {
@@ -13,7 +13,7 @@ import { MapChangeEvent, MapConfigInterface } from '../../interfaces';
 import { toLeafletBounds } from '../../utils';
 
 interface MapComponentProps extends PropsWithChildren {
-  config: RefObject<MapConfigInterface>;
+  config: MapConfigInterface;
   className?: string;
   configMode?: boolean;
   onMapChange?: (evt: MapChangeEvent) => void;
@@ -29,79 +29,96 @@ export const MapComponent = React.memo((props: MapComponentProps) => {
   } = props;
 
   const {
-    mapConfig,
-    onLayerClick,
+    layerClickHandler,
     activeLayerIndex,
-    onMapConfigChange,
-    onLayerChange,
+    configChangeHandler,
+    layerChangeHandler,
     map,
   } = useMapConfig({
     config,
     onMapChange,
   });
 
-  const zoomPosition = configMode ? 'topleft' : 'topright';
-  const classname = `nappr-map__container ${className || ''}`.trim();
+  const MapElement = useMemo(() => {
+    const zoomPosition = configMode ? 'topleft' : 'topright';
+    const classname = `nappr-map__container ${className || ''}`.trim();
 
-  const { tiles, layers } = mapConfig;
-  const hasTiles = !!tiles.url;
-  const hasLayers = layers && layers.length > 0;
+    const { tiles, layers, zoom, center, bounds } = config;
 
-  const showLayers = !!(hasTiles && hasLayers);
+    const maxZoom = zoom?.max;
+    const minZoom = zoom?.min;
+    const tilesUrl = tiles.url;
+    const currentZoom = zoom?.current;
+    const maxTilesLevel = tiles.maxLevel;
+    const minTilesLevel = tiles.minLevel;
+    const tilesExtension = tiles.extension;
+    const maxBounds = toLeafletBounds(bounds);
 
-  return (
-    <MapContainer
-      ref={map}
-      scrollWheelZoom
-      attributionControl={false}
-      bounceAtZoomLimits={false}
-      center={mapConfig.center || { lat: -0.5, lng: 0.5 }}
-      className={classname}
-      crs={Leaflet.CRS.Simple}
-      doubleClickZoom={false}
-      maxBounds={toLeafletBounds(mapConfig?.bounds)}
-      maxZoom={mapConfig?.zoom?.max || 18}
-      minZoom={mapConfig?.zoom?.min || 0}
-      wheelPxPerZoomLevel={256}
-      zoom={mapConfig?.zoom?.current || 9}
-      zoomControl={false}>
-      <React.Fragment>
-        <ZoomControl position={zoomPosition} />
-        {/* <!-- config layer --> */}
-        {configMode && (
-          <MapConfigLayer
-            config={mapConfig}
-            onConfigChange={onMapConfigChange}
-          />
-        )}
-        {/* <!-- controls layer layer --> */}
-        {showLayers && (
-          <MapControlsLayer
-            activeLayerIndex={activeLayerIndex}
-            extension={mapConfig.tiles.extension}
-            layers={mapConfig.layers}
-            position={MapControlsPosition.BOTTOM_RIGHT}
-            url={mapConfig.tiles.url}
-            onChange={onLayerChange}
-          />
-        )}
-        {/* <!-- markers layer --> */}
-        <LayerGroup>{children}</LayerGroup>
-        {/* <!-- tiles layer --> */}
-        {showLayers && (
-          <MapTilesLayer
-            activeLayerIndex={activeLayerIndex}
-            extension={mapConfig.tiles.extension}
-            layers={mapConfig.layers}
-            maxTilesLevel={mapConfig.tiles.maxLevel}
-            minTilesLevel={mapConfig.tiles.minLevel}
-            url={mapConfig.tiles.url}
-            onClick={onLayerClick}
-          />
-        )}
-      </React.Fragment>
-    </MapContainer>
-  );
+    const showLayers = !!(tilesUrl && layers && layers.length > 0);
+
+    return (
+      <MapContainer
+        ref={map}
+        attributionControl={false}
+        bounceAtZoomLimits={false}
+        center={center}
+        className={classname}
+        crs={Leaflet.CRS.Simple}
+        doubleClickZoom={false}
+        maxBounds={maxBounds}
+        maxZoom={maxZoom}
+        minZoom={minZoom}
+        scrollWheelZoom={'center'}
+        wheelPxPerZoomLevel={256}
+        zoom={currentZoom}
+        zoomControl={false}>
+        <React.Fragment>
+          <ZoomControl position={zoomPosition} />
+          {/* <!-- config layer --> */}
+          {configMode && (
+            <MapConfigLayer config={config} onChange={configChangeHandler} />
+          )}
+          {/* <!-- controls layer layer --> */}
+          {showLayers && (
+            <MapControlsLayer
+              activeLayerIndex={activeLayerIndex}
+              extension={tilesExtension}
+              layers={layers}
+              position={MapControlsPosition.BOTTOM_RIGHT}
+              url={tilesUrl}
+              onChange={layerChangeHandler}
+            />
+          )}
+          {/* <!-- markers layer --> */}
+          <LayerGroup>{children}</LayerGroup>
+          {/* <!-- tiles layer --> */}
+          {showLayers && (
+            <MapTilesLayer
+              activeLayerIndex={activeLayerIndex}
+              extension={tilesExtension}
+              layers={layers}
+              maxTilesLevel={maxTilesLevel}
+              minTilesLevel={minTilesLevel}
+              url={tilesUrl}
+              onClick={layerClickHandler}
+            />
+          )}
+        </React.Fragment>
+      </MapContainer>
+    );
+  }, [
+    activeLayerIndex,
+    children,
+    className,
+    config,
+    configChangeHandler,
+    configMode,
+    layerChangeHandler,
+    layerClickHandler,
+    map,
+  ]);
+
+  return MapElement;
 });
 
 MapComponent.displayName = 'MapComponent';

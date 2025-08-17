@@ -1,60 +1,46 @@
 import { LatLng, LeafletMouseEvent, Map } from 'leaflet';
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { MapEventTypes } from '../../enums';
 import { MapChangeEvent, MapConfigInterface } from '../../interfaces';
-import { toLeafletBounds } from '../../utils';
 
 interface UseMapConfigProps {
-  config: RefObject<MapConfigInterface>;
+  config: MapConfigInterface;
   onMapChange?: (evt: MapChangeEvent) => void;
 }
 
-export const useMapConfig = ({ config, onMapChange }: UseMapConfigProps) => {
+export const useMapConfig = ({ onMapChange }: UseMapConfigProps) => {
   const initialized = useRef(false);
 
   const map = useRef<Map | null>(null);
 
-  const [mapConfig, setMapConfig] = useState<MapConfigInterface>({
-    bounds: config.current?.bounds,
-    center: config.current?.center,
-    layers: config.current.layers,
-    tiles: {
-      extension: config.current.tiles?.extension || 'png',
-      maxLevel: config.current.tiles?.maxLevel || 18,
-      minLevel: config.current.tiles?.minLevel || 0,
-      url: config.current.tiles.url,
-    },
-    zoom: {
-      current: config.current?.zoom?.current,
-      max: config.current?.zoom?.max,
-      min: config.current?.zoom?.min,
-    },
-  });
+  // const [mapConfig, setMapConfig] = useState<MapConfigInterface>({
+  //   bounds: {
+  //     northEast: config.current?.bounds?.northEast || undefined,
+  //     southWest: config.current?.bounds?.southWest || undefined,
+  //   },
+  //   center: config.current?.center || { lat: -0.5, lng: 0.5 },
+  //   layers: config.current.layers,
+  //   tiles: {
+  //     extension: config.current.tiles?.extension || 'png',
+  //     maxLevel: config.current.tiles?.maxLevel || 18,
+  //     minLevel: config.current.tiles?.minLevel || 0,
+  //     url: config.current.tiles.url,
+  //   },
+  //   zoom: {
+  //     current: config.current?.zoom?.current || 9,
+  //     max: config.current?.zoom?.max || 18,
+  //     min: config.current?.zoom?.min || 0,
+  //   },
+  // });
 
   const [activeLayerIndex, setActiveLayerIndex] = useState<number>(0);
 
-  const onMapConfigChange = useCallback(
-    (data: MapConfigInterface) => {
-      if (data.bounds) {
-        const maxBounds = toLeafletBounds(data.bounds);
-        map.current?.setMaxBounds(maxBounds);
-      }
-
-      map.current?.setMinZoom(data.zoom?.min || 0);
-      map.current?.setMaxZoom(data.zoom?.max || 18);
-
-      config.current = data;
-      setMapConfig(data);
-    },
-    [config],
-  );
-
   const mapChangeHandler = useCallback(
-    (type: MapEventTypes, latlng?: LatLng) => {
+    (type: MapEventTypes, data?: { latlng?: LatLng }) => {
       if (onMapChange) {
         onMapChange({
-          latlng: latlng || map.current?.getCenter(),
+          latlng: data?.latlng || map.current?.getCenter(),
           layerId: activeLayerIndex,
           map: map.current,
           type,
@@ -64,17 +50,27 @@ export const useMapConfig = ({ config, onMapChange }: UseMapConfigProps) => {
     [activeLayerIndex, map, onMapChange],
   );
 
-  const onLayerClick = useCallback(
+  const configChangeHandler = useCallback(
+    (data: Partial<MapConfigInterface>) => {
+      console.log('data', data);
+      // const next = mergeMapConfig(mapConfig, data);
+      // config.current = next;
+      // setMapConfig(next);
+    },
+    [],
+  );
+
+  const layerClickHandler = useCallback(
     (evt: LeafletMouseEvent) => {
       const isTrusted = evt.originalEvent.isTrusted;
       if (isTrusted) {
-        mapChangeHandler(MapEventTypes.CLICK, evt.latlng);
+        mapChangeHandler(MapEventTypes.CLICK, { latlng: evt.latlng });
       }
     },
     [mapChangeHandler],
   );
 
-  const onLayerChange = useCallback(
+  const layerChangeHandler = useCallback(
     (index: number) => {
       setActiveLayerIndex(index);
       mapChangeHandler(MapEventTypes.LAYER_CHANGE);
@@ -92,10 +88,10 @@ export const useMapConfig = ({ config, onMapChange }: UseMapConfigProps) => {
 
   return {
     activeLayerIndex,
+    configChangeHandler,
+    layerChangeHandler,
+    layerClickHandler,
     map,
-    mapConfig,
-    onLayerChange,
-    onLayerClick,
-    onMapConfigChange,
+    // mapConfig,
   };
 };

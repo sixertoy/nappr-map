@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { MapIconType } from '../../../types';
+
 interface ConfigControlButtonProps {
   onClick: () => void;
-  icon: React.ComponentType<{ size: number }>;
+  icon?: MapIconType;
   size: number;
   className?: string;
   style?: React.CSSProperties;
@@ -18,7 +20,7 @@ export const ConfigControlButton = React.memo(
   }: ConfigControlButtonProps) => (
     <div className={className} style={style}>
       <button aria-label="Map control" type="button" onClick={onClick}>
-        <Icon size={size} />
+        {Icon && <Icon size={size} />}
       </button>
     </div>
   ),

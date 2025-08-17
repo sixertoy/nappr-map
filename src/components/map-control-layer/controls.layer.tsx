@@ -6,7 +6,7 @@ import { useToggle } from '../../hooks';
 import { LayerButton, LayerToggleButton } from '../buttons';
 
 interface MapControlsLayerProps {
-  layers?: string[];
+  layers: string[];
   url: string;
   extension?: string;
   activeLayerIndex?: number;
@@ -18,7 +18,7 @@ export const MapControlsLayer = React.memo(
   ({
     activeLayerIndex = 0,
     url,
-    layers = [],
+    layers,
     onChange,
     extension = 'png',
     position,
