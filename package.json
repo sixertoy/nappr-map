@@ -17,9 +17,10 @@
   ],
   "main": "./dist/nappr-map.umd.js",
   "module": "./dist/nappr-map.es.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/lib/index.d.ts",
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/nappr-map.es.js",
       "require": "./dist/nappr-map.umd.js"
     },
